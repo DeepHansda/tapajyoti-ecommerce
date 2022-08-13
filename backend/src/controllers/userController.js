@@ -1,0 +1,116 @@
+const UserModel = require('../DB/models/userModel')
+const catchAsyncErrors = require('../middleware/catchAsyncErrors')
+const ErrorHandler = require('../services/errorHandler')
+module.exports = {
+    signUp: catchAsyncErrors(async (req, res, next) => {
+        const {
+            full_name,
+            email,
+            mobile_number,
+            password,
+            role
+        } = req.body;
+
+        const data = {
+            full_name,
+            email,
+            mobile_number,
+            password,
+            avatar: 'http://fffewsf',
+            role
+        }
+
+        const _user = new UserModel(data)
+
+        await _user.save(async (err, user) => {
+            if (err) {
+                if (err.keyPattern.email) {
+                    return next(new ErrorHandler(`${err.keyValue.email} is already registered`, 401))
+                }
+                console.log(err)
+
+                return next(new ErrorHandler(`registration faild`, 401))
+
+            } else {
+                const token = await _user.getToken()
+                console.log(token)
+                return next(res.status(200).json({
+                    success: 1,
+                    message: 'registration successsful',
+                    user,
+                    token
+                }))
+            }
+        })
+    }),
+
+
+    login: catchAsyncErrors(async (req, res, next) => {
+        const {
+            email,
+            password
+        } = req.body;
+
+
+        if (!email || !password) {
+            return next(new ErrorHandler('please enter email or password', 401));
+        }
+        await UserModel.findOne({
+            email
+        }).exec(async (err, user) => {
+            if (err || !user) {
+                return next(new ErrorHandler('user not found ,please signup', 401))
+            }
+
+
+            const isCorrect = await user.comparePassword(password)
+
+
+            if (!isCorrect) {
+                return next(new ErrorHandler("Invalid email or password", 401))
+            }
+
+            const token = await user.getToken();
+            res.status(200).json({
+                success: 1,
+                message: 'login success!',
+                token
+            })
+        })
+    }),
+
+    getUsers: catchAsyncErrors(async (req, res, next) => {
+        
+        await UserModel.find({}).exec((err, users) => {
+            if (err) {
+                console.log(err)
+                return next(new ErrorHandler('something went wrong', 401))
+            } else if (!users || users.length === 0) {
+                return next(new ErrorHandler('no users found', 401))
+            } else {
+                res.status(200).json({
+                    success: 1,
+                    users
+                })
+            }
+        })
+
+    }),
+
+    getUserById: catchAsyncErrors(async (req, res, next) => {
+        const id = req.params.id
+        await UserModel.find({_id: id}).exec((err, user) => {
+            if (err) {
+                console.log(err)
+                return next(new ErrorHandler('something went wrong', 401))
+            } else if (!user || user.length === 0) {
+                return next(new ErrorHandler('does not exist', 401))
+            } else {
+                res.status(200).json({
+                    success: 1,
+                    user
+                })
+            }
+        })
+    })
+}

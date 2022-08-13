@@ -1,0 +1,4 @@
+/.env
+/sam.js
+/node_modules
+frontend/node_modules
