@@ -54,7 +54,7 @@ userSchema.methods.comparePassword = async function(password){
 
 userSchema.methods.getToken = async function(){
     const token = await jwt.sign({id:this._id},process.env.JWT_KEY,{
-        expiresIn:'2d'
+        expiresIn:'4d'
     })
     
     return token

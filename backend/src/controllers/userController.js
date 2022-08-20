@@ -1,6 +1,7 @@
 const UserModel = require('../DB/models/userModel')
 const catchAsyncErrors = require('../middleware/catchAsyncErrors')
-const ErrorHandler = require('../services/errorHandler')
+const ErrorHandler = require('../services/errorHandler');
+const tokenHandler = require('../services/tokenHandler');
 module.exports = {
     signUp: catchAsyncErrors(async (req, res, next) => {
         const {
@@ -32,14 +33,7 @@ module.exports = {
                 return next(new ErrorHandler(`registration faild`, 401))
 
             } else {
-                const token = await _user.getToken()
-                console.log(token)
-                return next(res.status(200).json({
-                    success: 1,
-                    message: 'registration successsful',
-                    user,
-                    token
-                }))
+                await tokenHandler(res,200,user)
             }
         })
     }),
@@ -70,14 +64,21 @@ module.exports = {
                 return next(new ErrorHandler("Invalid email or password", 401))
             }
 
-            const token = await user.getToken();
-            res.status(200).json({
-                success: 1,
-                message: 'login success!',
-                token
-            })
+            await tokenHandler(res,200,user)
         })
     }),
+
+    logout:catchAsyncErrors(async (req, res, next) => {
+        res.cookie("token", null, {
+          expires: new Date(Date.now()),
+          httpOnly: true,
+        });
+      
+        res.status(200).json({
+          success: true,
+          message: "Logged Out",
+        });
+      }),
 
     getUsers: catchAsyncErrors(async (req, res, next) => {
         
