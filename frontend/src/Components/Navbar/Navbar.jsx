@@ -11,6 +11,7 @@ import {
   FiUser,
   FiBarChart,
   FiCrosshair,
+  FiSearch,
 } from "react-icons/fi";
 
 function NavContact() {
@@ -32,7 +33,7 @@ function NavContact() {
   );
 }
 
-export default function Navbar({openBar,setOpenBar}) {
+export default function Navbar({ openBar, setOpenBar }) {
   const [width, setWidth] = useState(window.innerWidth);
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -51,23 +52,22 @@ export default function Navbar({openBar,setOpenBar}) {
             <img src={logo} alt="logo" />
           </div>
         </div>
-        <div className="navbar-middle"
-        
-          style={width < 600 ? ({top: openBar ? '0':'-2000px'}): {}}
-        
+        <div
+          className="navbar-middle"
+          style={width < 700 ? { top: openBar ? "0" : "-2000px" } : {}}
         >
-        <div className="navbar-close-button sideBarButton">
-              <FiCrosshair onClick={()=>setOpenBar(false)}/>
-            </div>
-          <div
-            className="navbar-middle-container"            
-          >
-            
-            {width < 600 && <NavContact />}
+          <div className="navbar-close-button sideBarButton">
+            <FiCrosshair onClick={() => setOpenBar(false)} />
+          </div>
+          <div className="navbar-middle-container">
+            {width < 700 && <NavContact />}
 
             <ul className="navbar-middle-items">
               <li className="navbar-middle-item">
                 <p>home</p>
+              </li>
+              <li className="navbar-middle-item">
+                <p>Book Rapair</p>
               </li>
               <li className="navbar-middle-item">
                 <p>products</p>
@@ -83,12 +83,14 @@ export default function Navbar({openBar,setOpenBar}) {
         </div>
 
         <div className="navbar-bottom">
-          {width > 600 && <NavContact />}
-          {width < 600 && (
+          {width > 700 && <NavContact />}
+          {width < 700 && (
             <p className="sideBarButton">
-              <FiBarChart onClick={()=>setOpenBar(true)}/>
+              <FiBarChart onClick={() => setOpenBar(true)} />
             </p>
           )}
+
+          {width > 700 && <SearchBar />}
 
           <div className="nav-user-options">
             <li>
@@ -102,7 +104,27 @@ export default function Navbar({openBar,setOpenBar}) {
             </li>
           </div>
         </div>
+
+        
+        <div className="serach-for-small">
+        {width < 700 && <SearchBar />}
+          </div>
       </nav>
     </div>
   );
+
+  function SearchBar() {
+    return (
+      <div className="navbar-bottom-search">
+        <div className="navbar-bottom-search-container">
+          <input type="text" />
+        </div>
+        <div className="navbar-bottom-search-button">
+          <button>
+            <FiSearch />
+          </button>
+        </div>
+      </div>
+    );
+  }
 }
