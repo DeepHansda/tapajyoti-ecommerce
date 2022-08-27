@@ -5,36 +5,38 @@ import img from "./img.jpeg";
 import "./categories.css";
 export default function Categories() {
   const settings = {
-   
     dots: false,
-    arrows: false,
+    arrows: true,
+    autoplay: true,
+    speed: 4000,
+    infinite: true,
+    slidesToScroll: 1,
+    autoplaySpeed: 2000,
+    swipeToSlide: true,
+    cssEase: "ease",
     responsive: [
       {
-        breakpoint:2000,
-        settings:{
+        breakpoint: 2000,
+        settings: {
           slidesToShow: 8,
-          slidesToScroll: 8,
-        }
+        },
       },
       {
-        breakpoint:1200,
-        settings:{
+        breakpoint: 1200,
+        settings: {
           slidesToShow: 6,
-          slidesToScroll: 6,
-        }
+        },
       },
       {
-        breakpoint:810,
-        settings:{
+        breakpoint: 810,
+        settings: {
           slidesToShow: 5,
-          slidesToScroll: 5,
         },
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 4,
-          slidesToScroll: 4,
         },
       },
     ],
