@@ -29,7 +29,7 @@
   color: var(--secondary-color);
   /* float:left; */
   margin: 0px 10px;
-  font-size: 16px;
+  font-size: 1.5em;
 }
 
 .navbar-middle {
@@ -74,7 +74,7 @@
 .nav-user-options li {
   display: inline-block;
   margin: 5px 18px;
-  font-size: 16px;
+  font-size: 1.5em;
   color: var(--secondary-color);
 }
 .nav-user-options {
@@ -86,7 +86,6 @@
 .navbar-bottom {
   display: flex;
   justify-content: space-between;
-
 }
 
 .navbar-bottom-search {
@@ -99,7 +98,7 @@
 }
 
 .navbar-bottom-search .navbar-bottom-search-container input {
-  padding: 0px 20px;
+  padding: 6px 25px;
   outline: none;
   font-family: "Poppins", sans-serif;
 }
