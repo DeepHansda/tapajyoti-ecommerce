@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.css";
 import logo from "../../assets/logo.png";
 import {
@@ -12,7 +12,11 @@ import {
   FiBarChart,
   FiCrosshair,
   FiSearch,
+  FiMenu,
+  FiX,
 } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { ProjectContext } from "../../App";
 
 function NavContact() {
   return (
@@ -34,18 +38,10 @@ function NavContact() {
 }
 
 export default function Navbar({ openBar, setOpenBar }) {
-  const [width, setWidth] = useState(window.innerWidth);
-  useEffect(() => {
-    window.addEventListener("resize", () => {
-      setWidth(window.innerWidth);
-    });
-
-    window.removeEventListener("resize", () => {
-      setWidth(window.innerWidth);
-    });
-  }, []);
+  const {offset,width} = useContext(ProjectContext)
+  
   return (
-    <div className="navbar">
+    <div className="navbar" style={{position:`${offset > 180 ? 'fixed':'relative'}}`}}>
       <nav className="navbar-container">
         <div className="navbar-upper">
           <div className="logo">
@@ -57,20 +53,20 @@ export default function Navbar({ openBar, setOpenBar }) {
           style={width < 700 ? { top: openBar ? "0" : "-2000px" } : {}}
         >
           <div className="navbar-close-button sideBarButton">
-            <FiCrosshair onClick={() => setOpenBar(false)} />
+            <FiX onClick={() => setOpenBar(false)} />
           </div>
           <div className="navbar-middle-container">
             {width < 700 && <NavContact />}
 
             <ul className="navbar-middle-items">
               <li className="navbar-middle-item">
-                <p>home</p>
+                <Link to='/'><p>home</p></Link>
               </li>
               <li className="navbar-middle-item">
                 <p>Book Rapair</p>
               </li>
               <li className="navbar-middle-item">
-                <p>products</p>
+                <Link to="/allProducts"><p>products</p></Link>
               </li>
               <li className="navbar-middle-item">
                 <p>contact</p>
@@ -86,7 +82,7 @@ export default function Navbar({ openBar, setOpenBar }) {
           {width > 700 && <NavContact />}
           {width < 700 && (
             <p className="sideBarButton">
-              <FiBarChart onClick={() => setOpenBar(true)} />
+              <FiMenu onClick={() => setOpenBar(true)} />
             </p>
           )}
 

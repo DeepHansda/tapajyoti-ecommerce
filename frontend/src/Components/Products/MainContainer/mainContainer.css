@@ -1,0 +1,30 @@
+
+.MuiDrawer-paper{
+    /* position:fixed; */
+    /* top:0; */
+    box-sizing: border-box;
+    /* height: 100%; */
+    margin:0;
+    padding:0 20px
+}
+.products-mainContainer{
+    display: flex;
+}
+
+.product-container-pagination{
+    width:100%;
+    
+}
+.mainContainer-product-container .chip-container{
+    margin:10px
+}
+
+@media screen and (min-width:600px){
+.MuiDrawer-paper{
+    box-sizing: border-box;
+   /* position: relative; */
+   margin-top:20px
+}
+    
+   
+}
