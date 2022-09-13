@@ -3,8 +3,8 @@ import React from "react";
 import img from "../../assets/pexels-lukas-669615.jpg";
 import img0 from "../../assets/img/FRu3TDxmd2tS6A23f216.jpg";
 import Footer from "../Footer/Footer";
-import MainSlider from "../Parts/Slider/Slider";
-import Categories from "../Parts/Categories/Categories";
+import MainSlider from "../Utils/Slider/Slider";
+import Categories from "../Utils/Categories/Categories";
 import ProductsContainer from "../Products/ProductsContainer";
 
 import {
@@ -75,7 +75,7 @@ export default function Main() {
           <h2>Brands</h2>
         </div>
         <div className="main-best-of-container">
-          <ProductsContainer />
+          {/* <ProductsContainer /> */}
         </div>
 
         <div className="product-show-more">
@@ -108,7 +108,7 @@ export default function Main() {
           <h2>Best Of</h2>
         </div>
         <div className="main-best-of-container">
-          <ProductsContainer />
+          {/* <ProductsContainer /> */}
         </div>
 
         <div className="product-show-more">

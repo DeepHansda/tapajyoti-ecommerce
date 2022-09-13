@@ -3,11 +3,11 @@ import Product from './Product'
 import './Products.css'
 
 import data from './data'
-export default function ProductsContainer() {
+export default function ProductsContainer({products}) {
   return (
     <div className="products-container">
         {
-            data.map(product =>{
+            products.map(product =>{
                 return (
                     <Product product={product}/>
                 )

@@ -3,24 +3,28 @@ import "./Products.css";
 import img from "../../assets/img/FRu3TDxmd2tS6A23f216.jpg";
 import { useState } from "react";
 import { FiHeart, FiShoppingCart} from "react-icons/fi";
-import { Link } from "react-router-dom";
-import Star from "../Parts/Star"
+import { Link,useNavigate } from "react-router-dom";
+import Star from "../Utils/Star"
 export default function Product({ product }) {
   const [readMore, setReadMore] = useState(false);
-  
+  const navigate = useNavigate()
+
+  const navigator = (id)=>{
+    navigate(`/productDetails/${id}`)
+  }
 
   return (
-    <Link to="/productDetails">
-      <div className="product">
+    
+      <div className="product" onClick={() =>navigator(product._id)}>
         <div className="product-container">
           <div className="product-img-container">
             <div className="product-img">
-              <img src={img} alt="" />
+              <img src={product.images[0].img} alt="" />
             </div>
 
             <div className="product-details">
               <div className="product-details-title">
-                <h3>sports shoes</h3>
+                <h3>{product.name}</h3>
               </div>
 
               <div className="product-details-desc">
@@ -38,11 +42,11 @@ export default function Product({ product }) {
               </div>
 
               <div className="product-details-price">
-                <h4>$400</h4>
+                <h4>{product.price}</h4>
               </div>
 
               <div className="product-details-ratings">
-                <Star/>
+                <Star numOfReviews={product.numOfReviews}/>
               </div>
               <div className="product-actions">
                 <div className="product-actions-container">
@@ -59,6 +63,6 @@ export default function Product({ product }) {
           </div>
         </div>
       </div>
-    </Link>
+    
   );
 }

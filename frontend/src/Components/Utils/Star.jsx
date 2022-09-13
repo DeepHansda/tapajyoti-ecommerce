@@ -14,7 +14,7 @@ const labels = {
   5: "Excellent+",
 };
 const value = 3.5;
-export default function Star() {
+export default function Star({numOfReviews}) {
   return (
     <div>
       <Box
@@ -26,13 +26,13 @@ export default function Star() {
       >
         <Rating
           name="text-feedback"
-          value={value}
+          value={numOfReviews}
           readOnly
           size="small"
           precision={0.5}
           emptyIcon={<FiStar style={{ opacity: 0.55 }} fontSize="inherit" />}
         />
-        <Box sx={{ ml: 2 }}>{labels[value]}</Box>
+        <Box sx={{ ml: 2 }}>{labels[numOfReviews]}</Box>
       </Box>
     </div>
   );

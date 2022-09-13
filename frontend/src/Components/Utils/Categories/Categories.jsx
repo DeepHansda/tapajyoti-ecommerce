@@ -3,11 +3,13 @@ import Slider from "react-slick";
 import Data from "./Data";
 import img from "./img.jpeg";
 import "./categories.css";
+import { useNavigate } from "react-router-dom";
+// import navigator from "../navigator";
 export default function Categories() {
   const settings = {
     dots: false,
     arrows: true,
-    autoplay: true,
+    // autoplay: true,
     speed: 4000,
     infinite: true,
     slidesToScroll: 1,
@@ -41,6 +43,11 @@ export default function Categories() {
       },
     ],
   };
+  const navigate = useNavigate()
+
+  const navigator = (value)=>{
+    navigate(`allProducts?category=${value}`)
+  }
   return (
     <div className="categories">
       <div className="categories-container">
@@ -53,7 +60,7 @@ export default function Categories() {
             <Slider {...settings}>
               {Data.map((value, index) => {
                 return (
-                  <div className="cate-item" key={index}>
+                  <div className="cate-item" key={index} onClick={() =>navigator(value.name)}>
                     <div className="cate-item-img">
                       <img src={img} alt="icon" />
                     </div>

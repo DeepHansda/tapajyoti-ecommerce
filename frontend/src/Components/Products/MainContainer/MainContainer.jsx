@@ -2,7 +2,6 @@ import {
   Divider,
   Drawer,
   Paper,
-  Toolbar,
   Typography,
   Slider,
   Box,
@@ -14,29 +13,94 @@ import {
   FormControlLabel,
   List,
   RadioGroup,
-  Pagination,
   Button,
   Chip,
 } from "@mui/material";
 import { Container } from "@mui/system";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FiArrowDown, FiChevronDown, FiSettings } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
 import { ProjectContext } from "../../../App";
+import { getProductsClient } from "../../../Redux/Actions/ProductsActions";
 import Footer from "../../Footer/Footer";
 import ProductsContainer from "../ProductsContainer";
-// import Slider from 'react-slick'
 import "./mainContainer.css";
+import Pagination from "react-js-pagination"
+import Loading from "../../Utils/Loading";
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
+
 export default function MainContainer() {
   const [value, setValue] = React.useState([0, 1000]);
-  const [brand, setBrand] = React.useState("All");
-  const [rating, setRating] = React.useState("All");
-  const [page, setPage] = React.useState(1);
+  const [brand, setBrand] = React.useState("");
+  const [ratings, setRatings] = React.useState("");
+  const [currentPage, setCurrentPage] = React.useState(1);
   const { offset, width } = useContext(ProjectContext);
   const [openDrawer, setOpenDrawer] = React.useState(false);
+  const dispatch = useDispatch();
+  const [keyword,setKeyword] = useState('')
+  const [category, setCategory] = React.useState('')
+  const [searchParams]=useSearchParams()
 
-  const handlePageChange = (event, value) => {
-    setPage(value);
+
+  // getting search parameter form searchbar------------------------------
+  
+  var keywordParam = searchParams.get('keyword')
+  useEffect(() => {
+    setKeyword(keywordParam === null ? '' : keywordParam)
+  },[keywordParam])
+  
+  var categoryParam = searchParams.get('category')
+  useEffect(() => {
+    setCategory(categoryParam === null ? '' : categoryParam)
+  },[categoryParam])
+
+  console.log(categoryParam)
+  // handling products------------------------------------------
+  useEffect(() => {
+    dispatch(getProductsClient(keyword,currentPage,category));
+  }, [keyword,currentPage,category]);
+
+
+
+  const productsStates = useSelector((state) => state.products);
+  const {
+  filteredProductsCount,
+  loading,
+  productPerPage,
+  products,
+  productsCount,error} = productsStates
+
+  console.log(products)
+
+  // filter events------------------------------------------------
+
+  const applyFilter = ()=>{
+    dispatch(getProductsClient(keyword,currentPage,ratings,brand));
+  }
+  const handlePageChange = (event) => {
+    setCurrentPage(event);
   };
+
+  function valuetext(value) {
+    return `${value}°C`;
+  }
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleBrandChange = (event, newValue) => {
+    setBrand(newValue);
+  };
+
+  const handleRatingChange = (event, newValue) => {
+    setRatings(newValue);
+  };
+
+  const breakPo = () => {
+    return width <= 600;
+  };
+
+  const drawerWidth = breakPo() ? "100%" : "300px";
 
   const brands = [
     {
@@ -91,224 +155,218 @@ export default function MainContainer() {
     },
   ];
 
-  function valuetext(value) {
-    return `${value}°C`;
-  }
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const handleBrandChange = (event, newValue) => {
-    setBrand(newValue);
-  };
-
-  const handleRatingChange = (event, newValue) => {
-    setRating(newValue);
-  };
-
-  const breakPo = () => {
-    return width <= 600;
-  };
-  console.log(value);
-  console.log(brand);
-  console.log(rating);
-
-  const drawerWidth = breakPo() ? "100%" : "300px";
-
   return (
     <React.Fragment>
-    <div className="products-mainContainer">
-      <div className="products-mainContainer-filter">
-        {/* Drawer sections */}
-        <Paper elevation={3}>
-          <Drawer
-            sx={{
-              width: drawerWidth,
-              flexShrink: 0,
-              "& .MuiDrawer-paper": {
-                width: drawerWidth,
-                position: `${breakPo() ? "fixed" : "relative"}`,
-              },
-            }}
-            variant={`${breakPo() ? "temporary" : "permanent"}`}
-            anchor={breakPo() ? "top" : "left"}
-            open={breakPo() && openDrawer}
-          >
-            {/* <Toolbar /> */}
-            <Container sx={{ padding: "20px" }}>
-              <Typography variant="h4">Filters</Typography>
-            </Container>
-            <Divider />
+      
+      { loading ? (<Loading/>): (
+        <>
+      <div className="products-mainContainer">
+        {/* filter box -------------------------------------------------*/}
 
-            {/* price section */}
-            <Container sx={{ marginTop: "20px" }}>
-              <Typography variant="h6">Price</Typography>
-              <Slider
-                aria-label="Custom marks"
-                // defaultValue={value}
-                value={value}
-                onChange={handleChange}
-                getAriaValueText={valuetext}
-                step={200}
-                valueLabelDisplay="auto"
-                marks={marks}
-                size="small"
-                min={0}
-                max={1000}
-              />
-            </Container>
-
-            {/* Brands sections */}
-
-            <Box>
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<FiChevronDown />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography>Brands</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <RadioGroup
-                    aria-labelledby="demo-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
-                    value={brand}
-                    onChange={handleBrandChange}
-                  >
-                    <List
-                      sx={{
-                        width: "100%",
-                        // maxWidth: 360,
-                        bgcolor: "background.paper",
-                        position: "relative",
-                        overflow: "auto",
-                        maxHeight: 300,
-                        // '& ul': { padding: 0 },
-                      }}
-                      dense
-                    >
-                      {brands.map((data, index) => {
-                        return (
-                          <ListItemButton key={index}>
-                            <FormControlLabel
-                              value={data.value}
-                              control={<Radio size="small" />}
-                              label={data.value}
-                              sx={{ textTransform: "capitalize" }}
-                            />
-                          </ListItemButton>
-                        );
-                      })}
-                    </List>
-                  </RadioGroup>
-                </AccordionDetails>
-              </Accordion>
-            </Box>
-
-            <Box>
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<FiChevronDown />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography>Customer Ratings</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <RadioGroup
-                    aria-labelledby="demo-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
-                    value={rating}
-                    onChange={handleRatingChange}
-                  >
-                    <List
-                      sx={{
-                        width: "100%",
-                        // maxWidth: 360,
-                        bgcolor: "background.paper",
-                        position: "relative",
-                        // overflow: "auto",
-                        maxHeight: 300,
-                        // '& ul': { padding: 0 },
-                      }}
-                      dense="true"
-                    >
-                      <ListItemButton>
-                        <FormControlLabel
-                          value={4}
-                          control={<Radio size="small" />}
-                          label="4★ & above"
-                          sx={{ textTransform: "capitalize" }}
-                        />
-                      </ListItemButton>
-
-                      <ListItemButton>
-                        <FormControlLabel
-                          value={3}
-                          control={<Radio size="small" />}
-                          label="3★ & above"
-                          sx={{ textTransform: "capitalize" }}
-                        />
-                      </ListItemButton>
-                    </List>
-                  </RadioGroup>
-                </AccordionDetails>
-              </Accordion>
-            </Box>
-            <Divider />
-
-            <Container
+        <div className="products-mainContainer-filter">
+          {/* Drawer sections */}
+          <Paper elevation={3}>
+            <Drawer
               sx={{
-                margin: "10px 0",
-                textAlign: "right",
-                "& button": {
-                  margin: `${breakPo() ? "5px" : "0"}`,
+                width: drawerWidth,
+                flexShrink: 0,
+                "& .MuiDrawer-paper": {
+                  width: drawerWidth,
+                  position: `${breakPo() ? "fixed" : "relative"}`,
                 },
               }}
+              variant={`${breakPo() ? "temporary" : "permanent"}`}
+              anchor={breakPo() ? "top" : "left"}
+              open={breakPo() && openDrawer}
             >
-              {breakPo() && (
-                <Button
-                  variant="contained"
+              {/* <Toolbar /> */}
+              <Container sx={{ padding: "20px" }}>
+                <Typography variant="h4">Filters</Typography>
+              </Container>
+              <Divider />
+
+              {/* price section */}
+              <Container sx={{ marginTop: "20px" }}>
+                <Typography variant="h6">Price</Typography>
+                <Slider
+                  aria-label="Custom marks"
+                  // defaultValue={value}
+                  value={value}
+                  onChange={handleChange}
+                  getAriaValueText={valuetext}
+                  step={200}
+                  valueLabelDisplay="auto"
+                  marks={marks}
                   size="small"
-                  color="error"
-                  onClick={() => setOpenDrawer(false)}
-                >
-                  Cancel
+                  min={0}
+                  max={1000}
+                />
+              </Container>
+
+              {/* Brands sections */}
+
+              <Box>
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<FiChevronDown />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>Brands</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <RadioGroup
+                      aria-labelledby="demo-controlled-radio-buttons-group"
+                      name="controlled-radio-buttons-group"
+                      value={brand}
+                      onChange={handleBrandChange}
+                    >
+                      <List
+                        sx={{
+                          width: "100%",
+                          // maxWidth: 360,
+                          bgcolor: "background.paper",
+                          position: "relative",
+                          overflow: "auto",
+                          maxHeight: 300,
+                          // '& ul': { padding: 0 },
+                        }}
+                        dense
+                      >
+                        {brands.map((data, index) => {
+                          return (
+                            <ListItemButton key={index}>
+                              <FormControlLabel
+                                value={data.value}
+                                control={<Radio size="small" />}
+                                label={data.value}
+                                sx={{ textTransform: "capitalize" }}
+                              />
+                            </ListItemButton>
+                          );
+                        })}
+                      </List>
+                    </RadioGroup>
+                  </AccordionDetails>
+                </Accordion>
+              </Box>
+
+              <Box sx={{marginTop:'10px'}}>
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<FiChevronDown />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>Customer Ratings</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <RadioGroup
+                      aria-labelledby="demo-controlled-radio-buttons-group"
+                      name="controlled-radio-buttons-group"
+                      value={ratings}
+                      onChange={handleRatingChange}
+                    >
+                      <List
+                        sx={{
+                          width: "100%",
+                          // maxWidth: 360,
+                          bgcolor: "background.paper",
+                          position: "relative",
+                          // overflow: "auto",
+                          maxHeight: 300,
+                          // '& ul': { padding: 0 },
+                        }}
+                        dense="true"
+                      >
+                        <ListItemButton>
+                          <FormControlLabel
+                            value={4}
+                            control={<Radio size="small" />}
+                            label="4★ & above"
+                            sx={{ textTransform: "capitalize" }}
+                          />
+                        </ListItemButton>
+
+                        <ListItemButton>
+                          <FormControlLabel
+                            value={3}
+                            control={<Radio size="small" />}
+                            label="3★ & above"
+                            sx={{ textTransform: "capitalize" }}
+                          />
+                        </ListItemButton>
+                      </List>
+                    </RadioGroup>
+                  </AccordionDetails>
+                </Accordion>
+              </Box>
+              <Divider />
+
+              <Container
+                sx={{
+                  margin: "10px 0",
+                  textAlign: "right",
+                  "& button": {
+                    margin: `${breakPo() ? "5px" : "0"}`,
+                  },
+                }}
+              >
+                {breakPo() && (
+                  <Button
+                    variant="contained"
+                    size="small"
+                    color="error"
+                    onClick={() => setOpenDrawer(false)}
+                  >
+                    Cancel
+                  </Button>
+                )}
+
+                <Button variant="contained" size="small" onClick={() =>applyFilter()}>
+                  Apply
                 </Button>
-              )}
-
-              <Button variant="contained" size="small">
-                Apply
-              </Button>
-            </Container>
-          </Drawer>
-        </Paper>
-      </div>
-
-      <div className="mainContainer-product-container">
-        <div className="chip-container">
-          {breakPo() && <Chip
-            label="Filter"
-            icon={<FiSettings />}
-            variant="outlined"
-            onClick={() => setOpenDrawer(true)}
-          />}
+              </Container>
+            </Drawer>
+          </Paper>
         </div>
-        <ProductsContainer />
 
-        <div className="product-container-pagination">
-          <Pagination
-            count={10}
-            page={page}
-            onChange={handlePageChange}
-            sx={{ margin: "0 auto" }}
-          />
+        {/* products box -------------------------------------------------*/}
+
+        <div className="mainContainer-product-container">
+          <div className="chip-container">
+            {breakPo() && (
+              <Chip
+                label="Filter"
+                icon={<FiSettings />}
+                variant="outlined"
+                onClick={() => setOpenDrawer(true)}
+              />
+            )}
+          </div>
+          <ProductsContainer products={products} />
+
+          <div className="products-container-pagination">
+            <Pagination
+              activePage={currentPage}
+              itemsCountPerPage={productPerPage}
+              totalItemsCount={productsCount}
+              onChange={handlePageChange}
+              nextPageText="Next"
+              prevPageText="Prev"
+              firstPageText="First"
+              lastPageText="Last"
+              itemClass="page-item"
+              linkClass="page-link"
+              activeClass="pageItemActive"
+              activeLinkClass="pageLinkActive"
+            />
+          </div>
         </div>
       </div>
-
-    </div>
-      <Footer/>
-      </React.Fragment>
+      <Footer />
+      </>
+      ) }
+    </React.Fragment>
   );
 }

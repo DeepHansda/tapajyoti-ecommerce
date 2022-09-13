@@ -5,7 +5,8 @@ const tokenHandler = require('../services/tokenHandler');
 module.exports = {
     signUp: catchAsyncErrors(async (req, res, next) => {
         const {
-            full_name,
+            first_name,
+            last_name,
             email,
             mobile_number,
             password,
@@ -13,7 +14,7 @@ module.exports = {
         } = req.body;
 
         const data = {
-            full_name,
+            full_name : first_name+' '+last_name,
             email,
             mobile_number,
             password,
@@ -101,6 +102,23 @@ module.exports = {
     getUserById: catchAsyncErrors(async (req, res, next) => {
         const id = req.params.id
         await UserModel.find({_id: id}).exec((err, user) => {
+            if (err) {
+                console.log(err)
+                return next(new ErrorHandler('something went wrong', 401))
+            } else if (!user || user.length === 0) {
+                return next(new ErrorHandler('does not exist', 401))
+            } else {
+                res.status(200).json({
+                    success: 1,
+                    user
+                })
+            }
+        })
+    }),
+
+
+    userDetails: catchAsyncErrors(async (req, res, next) => {
+        await UserModel.find({_id:req.user._id}).exec((err, user) => {
             if (err) {
                 console.log(err)
                 return next(new ErrorHandler('something went wrong', 401))

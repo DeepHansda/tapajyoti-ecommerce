@@ -1,0 +1,82 @@
+import {
+    ADMIN_PRODUCT_FAIL,
+    ADMIN_PRODUCT_REQUEST,
+    ADMIN_PRODUCT_SUCCESS,
+    ALL_PRODUCT_FAIL,
+    ALL_PRODUCT_REQUEST,
+    ALL_PRODUCT_SUCCESS,
+    PRODUCT_DETAILS_FAIL,
+    PRODUCT_DETAILS_REQUEST,
+    PRODUCT_DETAILS_SUCCESS
+} from '../Common/Constants'
+import {ProductsServices} from '../Common/ProductsServices'
+
+export const getProductsClient = (keyword , currentPage, category ,ratings ,brand) => async (dispatch) => {
+    try {
+        dispatch({
+            type: ALL_PRODUCT_REQUEST
+        })
+
+        const res = await ProductsServices.getProductsClient(keyword , currentPage, category ,ratings ,brand)
+
+        dispatch({
+            type: ALL_PRODUCT_SUCCESS,
+            payload: res.data
+        })
+
+        return Promise.resolve(res.data)
+    } catch (err) {
+        dispatch({
+            type: ALL_PRODUCT_FAIL,
+            payload: err
+        })
+        return Promise.reject(err)
+    }
+}
+
+export const getProductsAdmin = () => async (dispatch) => {
+    try {
+        dispatch({
+            type: ADMIN_PRODUCT_REQUEST
+        })
+
+        const res = await ProductsServices.getAllProducts()
+        console.log(res)
+        dispatch({
+            type: ADMIN_PRODUCT_SUCCESS,
+            payload: res.data
+        })
+        // return Promise.resolve(res.data)
+    } catch (err) {
+        dispatch({
+            type: ADMIN_PRODUCT_FAIL,
+            payload: err
+        })
+
+        // return Promise.reject(err)
+    }
+}
+
+export const getProductDetails = (id) => async (dispatch) => {
+    try {
+        dispatch({
+            type: PRODUCT_DETAILS_REQUEST
+        })
+
+        const res = await ProductsServices.getProductDetails(id)
+        console.log(res)
+        dispatch({
+            type: PRODUCT_DETAILS_SUCCESS,
+            payload: res.data.product
+        })
+        return Promise.resolve(res.data.product)
+    } catch (err) {
+        dispatch({
+            type: PRODUCT_DETAILS_FAIL,
+            payload: err
+        })
+
+        return Promise.reject(err)
+    }
+
+}

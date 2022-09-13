@@ -15,7 +15,7 @@ import {
   FiMenu,
   FiX,
 } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ProjectContext } from "../../App";
 
 function NavContact() {
@@ -38,10 +38,13 @@ function NavContact() {
 }
 
 export default function Navbar({ openBar, setOpenBar }) {
-  const {offset,width} = useContext(ProjectContext)
+  const { offset, width } = useContext(ProjectContext);
   
   return (
-    <div className="navbar" style={{position:`${offset > 180 ? 'fixed':'relative'}}`}}>
+    <div
+      className="navbar"
+      style={{ position: `${offset > 180 ? "fixed" : "relative"}}` }}
+    >
       <nav className="navbar-container">
         <div className="navbar-upper">
           <div className="logo">
@@ -60,13 +63,17 @@ export default function Navbar({ openBar, setOpenBar }) {
 
             <ul className="navbar-middle-items">
               <li className="navbar-middle-item">
-                <Link to='/'><p>home</p></Link>
+                <Link to="/">
+                  <p>home</p>
+                </Link>
               </li>
               <li className="navbar-middle-item">
                 <p>Book Rapair</p>
               </li>
               <li className="navbar-middle-item">
-                <Link to="/allProducts"><p>products</p></Link>
+                <Link to="/allProducts">
+                  <p>products</p>
+                </Link>
               </li>
               <li className="navbar-middle-item">
                 <p>contact</p>
@@ -89,34 +96,40 @@ export default function Navbar({ openBar, setOpenBar }) {
           {width > 700 && <SearchBar />}
 
           <div className="nav-user-options">
-            <li>
+            <Link to='/wishlist'><li>
               <FiHeart />
             </li>
-            <li>
+            </Link>
+            <Link to='/cart'><li>
               <FiShoppingCart />
-            </li>
+            </li></Link>
+            <Link to='/auth'>
             <li>
               <FiUser />
-            </li>
+            </li></Link>
           </div>
         </div>
 
-        
-        <div className="serach-for-small">
-        {width < 700 && <SearchBar />}
-          </div>
+        <div className="serach-for-small">{width < 700 && <SearchBar />}</div>
       </nav>
     </div>
   );
 
   function SearchBar() {
+    const [keyword, setKeyword] = useState("");
+    console.log(keyword);
+    const navigate = useNavigate()
+
+    const navigator = ()=>{
+      navigate(`/allProducts?keyword=${keyword}`)
+    }
     return (
       <div className="navbar-bottom-search">
         <div className="navbar-bottom-search-container">
-          <input type="text" />
+          <input type="text" value={keyword} onChange={(e)=>setKeyword(e.target.value)}/>
         </div>
         <div className="navbar-bottom-search-button">
-          <button>
+          <button onClick={()=>navigator()}>
             <FiSearch />
           </button>
         </div>

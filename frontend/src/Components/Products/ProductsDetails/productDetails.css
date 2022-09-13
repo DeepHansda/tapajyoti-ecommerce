@@ -134,7 +134,12 @@
     padding: 10px;
 
 }
+.product-information .cart-paper-quantity .cartInput input {
 
+    width: 60px;
+    padding:0 20px;
+    margin: 10px 0;
+}
 
 @media only screen and (min-width:600px){
 .product-information .product-details-main{
@@ -183,7 +188,7 @@
     /* float:left */
     /* display:flex; */
     /* justify-content: space-between */
-    /* position: absolute; */
+    position: absolute;
     right:0;
     top:0;
     width:55%

@@ -1,7 +1,7 @@
 const ProductModel = require('../DB/models/productModel')
 const catchAsyncErrors = require('../middleware/catchAsyncErrors')
 const ApiFeatures = require('../services/apiFeatures')
-const cloudUpload = require('../services/imageUpload')
+const {cloudUpload,cloudDelete} = require('../services/imageUpload')
 const ErrorHandler = require('../services/errorHandler')
 
 module.exports = {
@@ -20,6 +20,8 @@ module.exports = {
         const imgLinks = []
         for (x in productImages) {
             const result = await cloudUpload(productImages[x], folder)
+        console.log(result)
+            
             imgLinks.push({
                 public_id: result.public_id,
                 img: result.url
@@ -27,12 +29,13 @@ module.exports = {
         }
 
         req.body.images = imgLinks
+
         // res.body.createdBy= req.user.id
 
         const product = new ProductModel(req.body)
         await product.save((err, result) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 return next(new ErrorHandler('something went wrong', 401))
             }
 
@@ -66,7 +69,8 @@ module.exports = {
             success: 1,
             products,
             filteredProductsCount,
-            productsCount
+            productsCount,
+            productPerPage
 
         }))
 
@@ -93,7 +97,7 @@ module.exports = {
     // get product details
 
     getProductDetails: catchAsyncErrors(async (req, res, next) => {
-        await ProductModel.findOne({
+        await ProductModel.findById({
             _id: req.params.id
         }).exec((err, product) => {
             if (err) {

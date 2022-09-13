@@ -1,10 +1,10 @@
 const Data = [
     {
-        name:'lights',
+        name:'car',
     },{
-        name:'samsung',
+        name:'box',
     },{
-        name:'firebase',
+        name:'food',
     },{
         name:'aws',
     },{
