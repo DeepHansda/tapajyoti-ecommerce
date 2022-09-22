@@ -28,6 +28,7 @@ import "./mainContainer.css";
 import Pagination from "react-js-pagination"
 import Loading from "../../Utils/Loading";
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
+import Navbar from "../../Navbar/Navbar";
 
 export default function MainContainer() {
   const [value, setValue] = React.useState([0, 1000]);
@@ -157,7 +158,7 @@ export default function MainContainer() {
 
   return (
     <React.Fragment>
-      
+      <Navbar/>
       { loading ? (<Loading/>): (
         <>
       <div className="products-mainContainer">

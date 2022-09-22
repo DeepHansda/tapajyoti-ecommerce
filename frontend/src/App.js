@@ -12,16 +12,16 @@ import { getProductsAdmin } from "./Redux/Actions/ProductsActions";
 import Wishlist from "./Components/Wishlist/Wishlist";
 import Cart from "./Components/Cart/Cart";
 import Shipping from "./Components/Orders/Shipping";
-import ConfirmOrder from "./Components/Orders/ConfirmOrder";
+import ReviewOrder from "./Components/Orders/ReviewOrder";
 import Payment from "./Components/Orders/Payment";
 import Auth from "./Components/authentication/Auth";
 import { loadUser } from "./Redux/Actions/UserActions";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import Profile from "./Components/authentication/Profile";
 import Checkout from "./Components/Orders/Checkout";
+import MyOrders from "./Components/Orders/MyOrders";
 export const ProjectContext = createContext();
 function App() {
-  const [openBar, setOpenBar] = useState(false);
   const [offset, setOffset] = useState(0);
   const [width, setWidth] = useState(window.innerWidth);
   const [openAlert, setOpenAlert] = useState({
@@ -70,10 +70,10 @@ function App() {
     dispatch: dispatch,
   };
 
+
   return (
     <ProjectContext.Provider value={states}>
       <div className="App">
-        <Navbar openBar={openBar} setOpenBar={setOpenBar} />
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/productDetails/:id" element={<ProductDetalis />} />
@@ -86,8 +86,9 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/shipping" element={<Shipping />} />
-            <Route path="/confirmOrder" element={<ConfirmOrder />} />
+            <Route path="/reviewOrder" element={<ReviewOrder />} />
             <Route path="/payment" element={<Payment />} />
+            <Route path="/myOrders" element={<MyOrders />} />
           </Route>
         </Routes>
       </div>

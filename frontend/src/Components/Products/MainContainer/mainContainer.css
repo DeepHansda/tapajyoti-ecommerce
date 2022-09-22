@@ -70,3 +70,9 @@
     
    
 }
+
+@media only screen and (min-width:1280px){
+    .mainContainer-product-container{
+        width: 1200px;
+    }
+}

@@ -19,11 +19,12 @@ export default function Star({numOfReviews}) {
     <div>
       <Box
         sx={{
-          width: 200,
-          display: "flex",
+          // width: 200,
+          display:{xl: 'flex',xs:'block'},
           alignItems: "center",
         }}
       >
+        <Box>
         <Rating
           name="text-feedback"
           value={numOfReviews}
@@ -32,7 +33,9 @@ export default function Star({numOfReviews}) {
           precision={0.5}
           emptyIcon={<FiStar style={{ opacity: 0.55 }} fontSize="inherit" />}
         />
-        <Box sx={{ ml: 2 }}>{labels[numOfReviews]}</Box>
+        </Box>
+        
+        <Box sx={{ml: {lg:2} }}>{labels[numOfReviews]}</Box>
       </Box>
     </div>
   );

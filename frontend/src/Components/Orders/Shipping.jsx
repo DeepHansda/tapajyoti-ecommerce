@@ -26,7 +26,7 @@ const dispatch = useDispatch()
       return;
     }
     dispatch(saveShippingInfo({ address, state, country, phoneNo }));
-    navigate('/confirmOrder')
+    navigate('/reviewOrder')
   };
   return (
     <div className="shippingContainer">

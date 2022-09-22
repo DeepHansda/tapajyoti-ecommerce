@@ -1,13 +1,14 @@
 .cart {
-  max-width: 1000px;
+  max-width: 1400px;
   margin-top: 20px;
   outline: none;
   border: none;
+  margin: 20px auto;
 }
 
 .cart-paper-container .cart-paper-desc,
-.cart-paper-numbers,
-.cart-sub-total {
+.cart-paper-numbers,.cart-sub-total .sub-total
+ {
   display: flex;
 }
 .cart-paper-container .cart-paper-title {
@@ -30,6 +31,7 @@
 .cart-paper-container .cart-paper-title .MuiTypography-h4 {
   font-family: "Poppins", sans-serif;
   text-transform: capitalize;
+  font-weight: 500;
 }
 .cart-paper-container .cart-paper-img {
   flex: 40%;
@@ -37,11 +39,12 @@
 .cart-paper-container .cart-paper-img img {
   max-width: 100%;
 }
-.cart-sub-total {
+.cart-sub-total .sub-total {
   justify-content: flex-end;
   width: 100%;
   text-align: right;
   padding: 20px;
+  margin-top: 10px;
 }
 .cart-sub-total .cart-sub-total-title {
   margin: 0 30px;
@@ -51,6 +54,8 @@
   font-size: 1.4rem;
   font-weight: normal;
   color:var(--background-one);
+  font-weight: 500;
+
 }
 
 .cart .cart-checkout {
@@ -58,10 +63,22 @@
   text-align: right;
   padding: 10px;
 }
-
-@media only screen and (min-width: 1024px){
-    .cart-paper-container{
-        display: flex;
-        flex-direction: row;
-    }
+@media only screen and (min-width: 600px){
+.cart-paper-container .cart-paper-img {
+  flex:10%
+}
+}
+@media only screen and (min-width: 1280px){
+  .cart-sub-total{
+    border: 1px solid var(--public-color);
+height: fit-content;
+border-radius:5px;
+  }
+.cart-sub-total .sub-total {
+  flex-direction: column;
+  text-align:left;
+}
+.cart-sub-total .cart-sub-total-title {
+  margin: 0 
+}
 }

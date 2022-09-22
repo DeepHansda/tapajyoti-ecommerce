@@ -19,8 +19,8 @@ export default function Toast() {
   
     return (
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: 'top',
-          horizontal: 'center'}}>
-          <Alert onClose={handleClose} severity={success ? "success" : "error"} >
+          horizontal: 'center'}} >
+          <Alert onClose={handleClose} severity={success ? "success" : "error"} variant="filled">
             {message}
           </Alert>
         </Snackbar>

@@ -103,9 +103,9 @@ module.exports = {
                 }
 
                 if (req.body.orderStatus === 'Shipped') {
-                    order.orderedItems.forEach(async (order) => {
-                        console.log(order)
-                        await updateOrder(order.product, order.quantity)
+                    order.orderedItems.forEach(async (item) => {
+                        console.log(item)
+                        await updateOrder(item.id, item.quantity)
                     })
                 }
 

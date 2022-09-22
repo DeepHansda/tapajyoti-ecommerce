@@ -18,6 +18,10 @@ const orderSchema = new mongoose.Schema({
             type: Number,
             required: true
         },
+        country: {
+            type: String,
+            required: true
+        },
         phoneNo: {
             type: Number,
             required: true
@@ -37,11 +41,11 @@ const orderSchema = new mongoose.Schema({
             type: Number,
             required: true
         },
-        image: {
+        img: {
             type: String,
             required: true
         },
-        product: {
+        id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product',
             required: true
@@ -52,27 +56,28 @@ const orderSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    paymentInfo: {
-        id: {
-            type: String,
-            required: true
-        },
-        status: {
-            type: String,
-            required: true,
-            default: 'pending'
-        },
-        paidAt: {
-            type: Date,
-            required: true
-        },
-    },
+    // paymentInfo: {
+    //     id: {
+    //         type: String,
+    //         required: true
+    //     },
+    //     status: {
+    //         type: String,
+    //         required: true,
+    //         default: 'Pending'
+    //     },
+    //     paidAt: {
+    //         type: Date,
+    //         required: true
+    //     },
+    // },
 
-    itemPrice: {
-        type: Number,
-        required: true
-    },
     taxPrice: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    shippingCharges: {
         type: Number,
         required: true
     },
@@ -81,7 +86,7 @@ const orderSchema = new mongoose.Schema({
         required: true
     },
     orderStatus: {
-        type:String,
+        type: String,
         required: true,
         default: 'Processing'
     },

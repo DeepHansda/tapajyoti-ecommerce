@@ -17,6 +17,8 @@ import {
 } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { ProjectContext } from "../../App";
+import { Badge, IconButton, Tooltip } from "@mui/material";
+import { useSelector } from "react-redux";
 
 function NavContact() {
   return (
@@ -37,9 +39,35 @@ function NavContact() {
   );
 }
 
-export default function Navbar({ openBar, setOpenBar }) {
-  const { offset, width } = useContext(ProjectContext);
-  
+export default function Navbar() {
+  const { offset, width ,navigator} = useContext(ProjectContext);
+  const [openBar, setOpenBar] = useState(false);
+  const {cartItems} = useSelector(state=>state.cart)
+  const {wishItems} = useSelector((state)=>state.wishList)
+
+  const data = [
+    {
+      title: 'wishlist',
+      icon:FiHeart() ,
+      link:'/wishlist' ,
+      count:wishItems.length,
+    },
+
+    {
+      title: 'cart',
+      icon:FiShoppingCart() ,
+      link:'/cart' ,
+      count:cartItems.length,
+    },
+    {
+      title: 'profile',
+      icon:FiUser() ,
+      link:'/profile' ,
+      // count:,
+    }
+
+
+  ]
   return (
     <div
       className="navbar"
@@ -96,17 +124,22 @@ export default function Navbar({ openBar, setOpenBar }) {
           {width > 700 && <SearchBar />}
 
           <div className="nav-user-options">
-            <Link to='/wishlist'><li>
-              <FiHeart />
+            {
+              data.map((item, index)=>{
+                return (
+<li key={index}>
+            <Tooltip title={item.title} onClick={() =>navigator(item.link)}>
+  <IconButton>
+  <Badge badgeContent={item.count} color="primary">
+  {item.icon}
+</Badge>
+  </IconButton>
+</Tooltip>
             </li>
-            </Link>
-            <Link to='/cart'><li>
-              <FiShoppingCart />
-            </li></Link>
-            <Link to='/auth'>
-            <li>
-              <FiUser />
-            </li></Link>
+                )
+              })
+            }
+            
           </div>
         </div>
 

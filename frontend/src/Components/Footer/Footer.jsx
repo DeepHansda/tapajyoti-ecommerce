@@ -1,5 +1,13 @@
 import React from "react";
-import { FiCamera, FiFacebook, FiInstagram, FiLinkedin, FiMail, FiPhoneCall, FiTwitter } from "react-icons/fi";
+import {
+  FiCamera,
+  FiFacebook,
+  FiInstagram,
+  FiLinkedin,
+  FiMail,
+  FiPhoneCall,
+  FiTwitter,
+} from "react-icons/fi";
 import "./Footer.css";
 export default function Footer() {
   return (
@@ -7,21 +15,34 @@ export default function Footer() {
       <div className="footer-contact">
         <div className="footer-contact-container">
           <div className="footer-contact-number">
-            <p><span><FiPhoneCall/></span>9647750384</p>
+            <p>
+              <span>
+                <FiPhoneCall />
+              </span>
+              9647750384
+            </p>
           </div>
           <div className="footer-contact-email">
-            <p><span><FiMail/></span>deephansda921@gmail.com</p>
-          </div><div className="footer-contact-address">
             <p>
-              
-              <span><FiCamera/></span>Maheshpur,Salanpur,Asansol,West Bengal , 713357
+              <span>
+                <FiMail />
+              </span>
+              deephansda921@gmail.com
+            </p>
+          </div>
+          <div className="footer-contact-address">
+            <p>
+              <span>
+                <FiCamera />
+              </span>
+              Maheshpur,Salanpur,Asansol,West Bengal , 713357
             </p>
           </div>
         </div>
       </div>
       <div class="row primary">
         <div class="column about">
-          <h3>Foolish Developer</h3>
+          <h3>Mr.FixIt</h3>
 
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae,
@@ -99,7 +120,7 @@ export default function Footer() {
       </div>
 
       <div class="row copyright">
-        <p>Copyright &copy; 2021 Foolish Developer</p>
+        <p>Copyright &copy; 2021 Mr.FixIt</p>
       </div>
     </footer>
   );

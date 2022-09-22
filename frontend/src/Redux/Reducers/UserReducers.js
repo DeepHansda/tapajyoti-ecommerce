@@ -59,7 +59,6 @@ export const userReducer = (
     case LOGOUT_REQUEST:
         return {
             loading: true,
-
         }  
     case LOGOUT_SUCCESS:
       return {

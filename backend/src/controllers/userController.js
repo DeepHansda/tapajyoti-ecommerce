@@ -76,7 +76,7 @@ module.exports = {
         });
       
         res.status(200).json({
-          success: true,
+          success: 1,
           message: "Logged Out",
         });
       }),
@@ -118,7 +118,7 @@ module.exports = {
 
 
     userDetails: catchAsyncErrors(async (req, res, next) => {
-        await UserModel.find({_id:req.user._id}).exec((err, user) => {
+        await UserModel.findById({_id:req.user._id}).exec((err, user) => {
             if (err) {
                 console.log(err)
                 return next(new ErrorHandler('something went wrong', 401))
