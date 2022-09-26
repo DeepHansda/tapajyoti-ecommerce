@@ -29,19 +29,19 @@ module.exports= {
 }),
 
 paymentVerify:catchAsyncErrors(async (req, res, next) => {
-    const {order_id,payment_id}= req.body;
+    const {razorpay_order_id,razorpay_payment_id}= req.body;
     const razorpay_signature = req.headers['x-razorpay-signature'];
  // Verification & Send Response to User
 
   // Creating hmac object 
     const hmac = crypto.createHmac('sha256',process.env.KEY_SECRET);
      // Passing the data to be hashed
-     hmac.update(order_id+ "|" +payment_id)
+     hmac.update(razorpay_order_id+ "|" +razorpay_payment_id)
      // Creating the hmac in the required format
      const generated_signature = hmac.digest('hex');
 
      if(generated_signature==razorpay_signature){
-        res.status(200).json({success:1,message:'Payment has been varified'})
+        res.status(200).json({success:1,message:'Payment has been varified',razorpay_order_id,razorpay_payment_id})
      }
      else{
         next(new ErrorHandler('Payment Verification faild!', 401))

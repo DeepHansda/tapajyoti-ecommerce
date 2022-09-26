@@ -16,7 +16,7 @@ const productSchema = new mongoose.Schema({
     },
     brand:{
         type: String,
-        required: [true, 'please enter the brand'],
+        // required: [true, 'please enter the brand'],
         trim: true
     },
     ratings: {

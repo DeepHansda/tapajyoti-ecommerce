@@ -5,6 +5,9 @@ import {
     ALL_PRODUCT_FAIL,
     ALL_PRODUCT_REQUEST,
     ALL_PRODUCT_SUCCESS,
+    NEW_REVIEW_FAIL,
+    NEW_REVIEW_REQUEST,
+    NEW_REVIEW_SUCCESS,
     PRODUCT_DETAILS_FAIL,
     PRODUCT_DETAILS_REQUEST,
     PRODUCT_DETAILS_SUCCESS
@@ -79,4 +82,32 @@ export const getProductDetails = (id) => async (dispatch) => {
         return Promise.reject(err)
     }
 
+}
+
+export const addReview = (reviewData) =>async (dispatch) => {
+    try{
+        dispatch({
+            type:NEW_REVIEW_REQUEST
+        })
+
+        const {data} = await ProductsServices.createReviews(reviewData)
+        if(data.success===1){
+            dispatch({
+                type:NEW_REVIEW_SUCCESS,
+                payload:data
+            })
+
+            return Promise.resolve(data)
+        }
+
+        
+    }
+    catch(err) {
+        dispatch({
+            type:NEW_REVIEW_FAIL,
+            payload: err
+        })
+
+        return Promise.reject(err)
+    }
 }

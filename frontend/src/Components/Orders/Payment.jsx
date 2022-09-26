@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   AppBar,
   Button,
@@ -24,6 +24,8 @@ import {ProjectContext} from "../../App"
 import {paymentProcess} from "../../Redux/Actions/PaymentActions"
 import Toast from "../Utils/Toast";
 import { createOrders } from "../../Redux/Actions/OrderActions";
+import { paymentVerify } from "../../Redux/Actions/PaymentActions";
+import Loading from "../Utils/Loading";
 
 
 
@@ -40,126 +42,182 @@ function Payment() {
   const {user} = useSelector((state) => state.user);
   const {shippingInfo,cartItems}= useSelector((state) => state.cart)
   const {payment,error} = useSelector((state) => state.payment)
+  const {order,loading} = useSelector((state) => state.order)
   console.log(user,shippingInfo,cartItems,payment,error,paymentPrices);
   const {dispatch, navigator ,setOpenAlert} = useContext(ProjectContext);
   
 
+  useEffect(() => {
+    if(error) {
+      setOpenAlert({open:true,message:'Check Your Network Connection',success:false})
+      // location.reload()
+    }
+  },[error])
 
-const placeOrder = () => {
+const formatDate = () =>{
+  const result = new Date(Date.now())
+  result.setDate(result.getDate() + 7)
+  return result
+}
+const placeOrder = (paymentInfo) => {
+  dispatch(paymentVerify(paymentInfo)).then((res) => {
+    setOpenAlert({open: true,message:res.message,success:true})
+
+
+    const orderData = {
+      shippingInfo,
+      orderedItems:cartItems,
+      createdBy:user._id,
+      paymentInfo:{
+        receipt:res.razorpay_order_id,
+        payment_id:res.razorpay_payment_id,
+        status:'Paid',
+        paidAt:Date.now()
+      },
+      shippingCharges:paymentPrices.shippingCharges,
+      totalPrice:paymentPrices.totalPrice,
+      deliveryDate:formatDate()
+    }
+
+    dispatch(createOrders(orderData)).then((res)=>{
+      if(res.success==1){
+        setOpenAlert({open: true,message:'order placed',success:true});
+        localStorage.setItem('order',JSON.stringify(order))
+        navigator('/confirmOrder')
+      }
+    }).catch((err)=>{
+      setOpenAlert({open: true,message:err.message,success:false});
+    })
+
+  
+
+
+  }).catch((error) => {
+    setOpenAlert({open:true,message:error.message,success:false})
+  })
   console.log('place ordder called')
-  const orderData = {
-    shippingInfo,
-    orderedItems:cartItems,
-    createdBy:user._id,
-    shippingCharges:paymentPrices.shippingCharges,
-    totalPrice:paymentPrices.totalPrice,
-  }
+  
 
-  dispatch(createOrders(orderData))
 }
   
+const pay = (banks) => {
+  console.log('yes calling ' + process.env.REACT_APP_KEY_ID)
+  var options = {
+    "key": process.env.REACT_APP_KEY_ID, 
+    "amount": payment.amount, 
+    "currency":payment.currency,
+    "name": "Dummy Academy",
+    "description": "Pay & Checkout this Course, Upgrade your DSA Skill",
+     "image":'',
+    "order_id": payment.id,  
+    "handler": function (response){
+        if(response.razorpay_signature){
+          placeOrder(response)
+        }
+        // alert("This step of Payment Succeeded");
+    },
+    "prefill": {
+       //Here we are prefilling random contact
+      "contact":user.phoneNo,
+        //name and email id, so while checkout
+      "name": user.full_name,  
+      "email": user.email  
+    },
+    config: {
+      display: {
+        blocks: {
+          banks:banks
+        },
+        sequence: ['block.banks'],
+        preferences: {
+          show_default_blocks: false,
+        },
+      },
+    },
+  
+  "theme": {
+        "color": "#2300a3"
+    }
+}
+
+const rzp = new window.Razorpay(options);
+if(!rzp){
+  setOpenAlert({open:true,message:"Razorpay SDK failed to load Check Your Network Connection.",success:false})
+}
+rzp.on('payment.failed', function (response){
+  console.log(response);
+  alert("This step of Payment Failed");
+});
+rzp.open()
+
+
+};
 
   const handleOrder = () =>{
     dispatch(paymentProcess({amount:paymentPrices.totalPrice}))
-    switch(paymentMethod){
-      case 'upi':
-        const upiBanks = {
-          name: 'Pay via UPI',
-          instruments: [
-            {
-              method: 'upi'
-            }
-          ],
-        }
-       return pay(upiBanks)
-
-      case 'wallets':
-        const walletsBanks = {
-          name: 'Pay via Wallet',
-          instruments: [
-            {
-              method: 'wallet'
-            }
-          ],
-        }
-        return pay(walletsBanks)
-
-        case 'cards':
-        const cardsBanks = {
-          name: 'Pay via Cards',
-          instruments: [
-            {
-              method: 'card'
-            }
-          ],
-        }
-        return pay(cardsBanks)
-
-        case 'netBankings':
-        const netBanks = {
-          name: 'Pay via Net Banking',
-          instruments: [
-            {
-              method: 'netbanking'
-            }
-          ],
-        }
-        return pay(netBanks)
-        
-        default:
-          return setOpenAlert({open:true,message:"please select a payment option.",success:false})
-
-    }
-
-  }
-
-
-
-  const pay = (banks) => {
-    console.log(banks)
-    var options = {
-      "key": process.env.REACT_APP_KEY_ID, 
-      "amount": payment.amount, 
-      "currency":payment.currency,
-      "name": "Dummy Academy",
-      "description": "Pay & Checkout this Course, Upgrade your DSA Skill",
-       "image":'',
-      "order_id": payment.id,  
-      "handler": function (response){
-          console.log(response)
-          alert("This step of Payment Succeeded");
-      },
-      "prefill": {
-         //Here we are prefilling random contact
-        "contact":user.phoneNo,
-          //name and email id, so while checkout
-        "name": user.full_name,  
-        "email": user.email  
-      },
-      config: {
-        display: {
-          blocks: {
-            banks:banks
-          },
-          sequence: ['block.banks'],
-          preferences: {
-            show_default_blocks: false,
-          },
-        },
-      },
-    
-    "theme": {
-          "color": "#2300a3"
+    if(payment.amount!==0){
+      switch(paymentMethod){
+        case 'upi':
+          const upiBanks = {
+            name: 'Pay via UPI',
+            instruments: [
+              {
+                method: 'upi'
+              }
+            ],
+          }
+         return pay(upiBanks)
+  
+        case 'wallets':
+          const walletsBanks = {
+            name: 'Pay via Wallet',
+            instruments: [
+              {
+                method: 'wallet'
+              }
+            ],
+          }
+          return pay(walletsBanks)
+  
+          case 'cards':
+          const cardsBanks = {
+            name: 'Pay via Cards',
+            instruments: [
+              {
+                method: 'card'
+              }
+            ],
+          }
+          return pay(cardsBanks)
+  
+          case 'netBankings':
+          const netBanks = {
+            name: 'Pay via Net Banking',
+            instruments: [
+              {
+                method: 'netbanking'
+              }
+            ],
+          }
+          return pay(netBanks)
+          
+          default:
+            return setOpenAlert({open:true,message:"please select a payment option.",success:false})
+  
       }
+    }
+    
+
   }
 
-  const rzp = new window.Razorpay(options);
-  rzp.open()
-};
+
+
+  
   
   return (
     <Fragment>
       <Toast/>
+      {loading && <Loading/>}
       <OrderStepper activeStep={2}/>
     <Container maxWidth="md">
       <Paper variant="outlined" square>

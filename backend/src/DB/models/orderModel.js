@@ -56,21 +56,25 @@ const orderSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    // paymentInfo: {
-    //     id: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     status: {
-    //         type: String,
-    //         required: true,
-    //         default: 'Pending'
-    //     },
-    //     paidAt: {
-    //         type: Date,
-    //         required: true
-    //     },
-    // },
+    paymentInfo: {
+        receipt:{
+            type:String,
+            required: true
+        },
+        payment_id: {
+            type: String,
+            required: true
+        },
+        status: {
+            type: String,
+            required: true,
+            default: 'Pending'
+        },
+        paidAt: {
+            type: Date,
+            required: true
+        },
+    },
 
     taxPrice: {
         type: Number,
@@ -89,6 +93,9 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true,
         default: 'Processing'
+    },
+    deliveryDate:{
+        type: Date,
     },
     deliveredAt: {
         type: Date,

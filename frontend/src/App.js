@@ -20,6 +20,7 @@ import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import Profile from "./Components/authentication/Profile";
 import Checkout from "./Components/Orders/Checkout";
 import MyOrders from "./Components/Orders/MyOrders";
+import ConfirmOrder from "./Components/Orders/ConfirmOrder";
 export const ProjectContext = createContext();
 function App() {
   const [offset, setOffset] = useState(0);
@@ -89,6 +90,8 @@ function App() {
             <Route path="/reviewOrder" element={<ReviewOrder />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/myOrders" element={<MyOrders />} />
+            <Route path="/confirmOrder" element={<ConfirmOrder />} />
+
           </Route>
         </Routes>
       </div>

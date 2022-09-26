@@ -104,7 +104,6 @@ module.exports = {
 
                 if (req.body.orderStatus === 'Shipped') {
                     order.orderedItems.forEach(async (item) => {
-                        console.log(item)
                         await updateOrder(item.id, item.quantity)
                     })
                 }
@@ -136,7 +135,6 @@ module.exports = {
             const product = await ProductModel.findOne({
                 _id: id
             })
-            console.log(product)
             product.stock -= quantity
             await product.save({
                 validateBeforeSave: false

@@ -10,7 +10,7 @@ import {
 export const cartReducers = (
   state = {
     cartItems: [],
-    shippingInfo:{}
+    shippingInfo: {},
   },
   action
 ) => {
@@ -48,13 +48,13 @@ export const cartReducers = (
         error: payload,
       };
 
-     case SAVE_SHIPPING_INFO:
-        return {
-          ...state,
-          shippingInfo: payload
-        }
-      case SAVE_SHIPPING_INFO_FAILD:
-        return {error: payload  }
+    case SAVE_SHIPPING_INFO:
+      return {
+        ...state,
+        shippingInfo: payload,
+      };
+    case SAVE_SHIPPING_INFO_FAILD:
+      return { error: payload };
     default:
       return state;
   }

@@ -6,7 +6,6 @@ import { ProjectContext } from "../../App";
 export default function Toast() {
 
     const { openAlert ,setOpenAlert } = useContext(ProjectContext)
-    console.log(openAlert)
     const {open,message,success} = openAlert
   
     const handleClose = (event, reason) => {

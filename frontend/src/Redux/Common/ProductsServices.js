@@ -35,6 +35,9 @@ export const ProductsServices ={
     deleteProduct:(id)=>{
         return API.delete(`/deleteProduct/${id}`)
     },
+    createReviews:(reviewData)=>{
+        return API.post('/createReview',reviewData)
+    }
 
 
 }

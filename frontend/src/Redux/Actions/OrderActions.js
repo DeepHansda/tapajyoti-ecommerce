@@ -20,12 +20,16 @@ export const createOrders = (orderData) => async (dispatch) => {
         type: CREATE_ORDER_SUCCESS,
         payload: data.order,
       });
+
+      return Promise.resolve(data)
     }
   } catch (error) {
     dispatch({
       type: CREATE_ORDER_FAIL,
       payload: error,
     });
+
+    return Promise.reject(error)
   }
 };
 

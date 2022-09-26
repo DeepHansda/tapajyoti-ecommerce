@@ -14,20 +14,19 @@ const labels = {
   5: "Excellent+",
 };
 const value = 3.5;
-export default function Star({numOfReviews}) {
+export default function Star({ratings}) {
   return (
     <div>
       <Box
         sx={{
           // width: 200,
-          display:{xl: 'flex',xs:'block'},
+          display:{lg: 'flex',xs:'block'},
           alignItems: "center",
         }}
       >
         <Box>
         <Rating
-          name="text-feedback"
-          value={numOfReviews}
+          value={ratings}
           readOnly
           size="small"
           precision={0.5}
@@ -35,7 +34,7 @@ export default function Star({numOfReviews}) {
         />
         </Box>
         
-        <Box sx={{ml: {lg:2} }}>{labels[numOfReviews]}</Box>
+        <Box sx={{ml: {lg:2} }}>{labels[ratings]}</Box>
       </Box>
     </div>
   );
