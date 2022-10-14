@@ -5,11 +5,11 @@ const uploadFolder = path.join(__dirname, '../uploads')
 
 
 // check folder
-fs.exists(uploadFolder, (exists) => {
-    exists ? console.log('folder exsits') : fs.mkdir(uploadFolder, (err) => {
-        err ? console.log(err) : console.log('folder created!')
-    })
-})
+// fs.exists(uploadFolder, (exists) => {
+//     exists ? console.log('folder exsits') : fs.mkdir(uploadFolder, (err) => {
+//         err ? console.log(err) : console.log('folder created!')
+//     })
+// })
 
 // creating file storage
 const storage = multer.diskStorage({
