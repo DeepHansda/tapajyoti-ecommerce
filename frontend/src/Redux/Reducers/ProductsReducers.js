@@ -6,6 +6,9 @@ import {
     ALL_PRODUCT_REQUEST,
     ALL_PRODUCT_SUCCESS,
     CLEAR_ERRORS,
+    NEW_PRODUCT_FAIL,
+    NEW_PRODUCT_REQUEST,
+    NEW_PRODUCT_SUCCESS,
     NEW_REVIEW_FAIL,
     NEW_REVIEW_REQUEST,
     NEW_REVIEW_RESET,
@@ -15,6 +18,39 @@ import {
     PRODUCT_DETAILS_SUCCESS,
 } from "../Common/Constants";
 
+export const newProductReducer = (
+    state = {
+        product:{},
+    },
+    action
+) => {
+    const {type,payload} = action;
+
+    switch (type) {
+        case NEW_PRODUCT_REQUEST:
+            return {
+                loading: true,
+                product:{}
+            };
+        case NEW_PRODUCT_SUCCESS:
+            return {
+                loading: false,
+                product: payload,
+            };
+        case NEW_PRODUCT_FAIL:
+            return {
+                loading: false,
+                error: payload,
+            };
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
+            };
+        default:
+            return state;
+    }
+};
 export const productsReducer = (
     state = {
         products: [],

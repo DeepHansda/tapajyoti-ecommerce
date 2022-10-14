@@ -26,7 +26,7 @@ module.exports = {
 
     // get all orders
     getAllOrders: catchAsyncErrors(async (req, res, next) => {
-        await Order.find({}).exec((err, orders) => {
+        await Order.find({}).populate("createdBy").exec((err, orders) => {
             if (err) {
                 console.log(err)
                 return next(new ErrorHandler('something went wrong', 401))
@@ -51,7 +51,7 @@ module.exports = {
     getOrder: catchAsyncErrors(async (req, res, next) => {
         await Order.findOne({
             _id: req.params.id
-        }).exec((err, order) => {
+        }).populate('createdBy').exec((err, order) => {
             if (err) {
                 console.log(err)
                 return next(new ErrorHandler('something went wrong', 401))

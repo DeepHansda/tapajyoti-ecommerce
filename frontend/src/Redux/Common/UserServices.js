@@ -17,5 +17,8 @@ export const UserServices = {
     },
     logOut:()=>{
         return API.post('/logout')
+    },
+    deleteUser:(id)=>{
+        return API.delete(`/deleteUser/${id}`)
     }
 }

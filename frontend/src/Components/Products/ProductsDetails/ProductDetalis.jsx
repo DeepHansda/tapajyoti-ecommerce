@@ -36,6 +36,7 @@ import Footer from "../../Footer/Footer";
 import Loading from "../../Utils/Loading";
 import Toast from "../../Utils/Toast";
 import ReviewCard from "./ReviewCard";
+import { useRef } from "react";
 
 export default function ProductDetalis() {
   const { offset, width, dispatch, setOpenAlert } = useContext(ProjectContext);
@@ -47,6 +48,7 @@ export default function ProductDetalis() {
   const [reviewComment, setReviewComment] = useState("");
   const [openReviewModal, setOpenReviewModal] = useState(false);
 
+  const product_details_slider = useRef('')
   useEffect(() => {
     dispatch(getProductDetails(id));
   }, []);
@@ -157,6 +159,10 @@ export default function ProductDetalis() {
         });
       });
   };
+
+  const imageGallery = (img) =>{
+   product_details_slider.current.style.backgroundImage = `url(${img})`
+  }
   return (
     <Fragment>
       <Navbar />
@@ -171,13 +177,13 @@ export default function ProductDetalis() {
             }`,
           }}
         >
-          <div className="product-details-slider">
+          <div className="product-details-slider" ref={product_details_slider}>
             <div className="product-images">
               {/* <img src="" className="active" alt="" /> */}
-              <img src={img1} alt="" />
-              <img src={img2} alt="" />
+              <img src={img1} alt="" onClick={()=>imageGallery(img1)}/>
+              <img src={img2} alt="" onClick={()=>imageGallery(img2)}/>
               <img src={img3} alt="" />
-              <img src={img4} alt="" />
+              {/* <img src={img4} alt="" /> */}
               {/* <img src={img5} alt="" /> */}
             </div>
           </div>

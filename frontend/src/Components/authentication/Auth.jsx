@@ -56,10 +56,11 @@ export default function SignUp() {
   const [confirmPassword,setConfirmPassword] = useState('')
 
 
-  const {dispatch,navigator,setOpenAlert} = useContext(ProjectContext)
+  const {dispatch,navigator,setOpenAlert,location} = useContext(ProjectContext)
   const {loading ,isAuthenticated, user ,error} = useSelector((state)=>state.user)
 
-
+  
+  console.log(location.state?.previousPath)
   console.log(user);
 
 
@@ -96,6 +97,7 @@ export default function SignUp() {
     }
 
     if(isAuthenticated){
+      
       navigator('/profile')
     }
 

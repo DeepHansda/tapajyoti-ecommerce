@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Navigate, Outlet, Route } from "react-router-dom";
 
 const ProtectedRoute = ({ isAdmin ,children,redirectPath="/auth" }) => {
+  console.log(isAdmin)
  
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -22,20 +23,5 @@ const ProtectedRoute = ({ isAdmin ,children,redirectPath="/auth" }) => {
   );
 };
 
-
-{/* <Route
-          {...rest}
-          render={(props) => {
-            if (isAuthenticated === false) {
-              return <Navigate to='/auth' />;
-            }
-
-            if (isAdmin === true && user.role !== "admin") {
-                return <Navigate to='/auth' />;
-            }
-
-            return <Element {...props} />;
-          }}
-        /> */}
 
 export default ProtectedRoute;

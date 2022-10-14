@@ -13,9 +13,9 @@ fs.exists(uploadFolder, (exists) => {
 
 // creating file storage
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, path.join(path.dirname(__dirname), "uploads"))
-    },
+    // destination: (req, file, cb) => {
+    //     cb(null, path.join(path.dirname(__dirname), "uploads"))
+    // },
     filename: (req, file, cb) => {
         cb(null, new Date().toISOString().replace(/:/g, "-") + "_" + file.originalname)
     }

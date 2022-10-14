@@ -19,22 +19,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { ProjectContext } from "../../App";
 import { Badge, IconButton, Tooltip } from "@mui/material";
 import { useSelector } from "react-redux";
+import SocialContactBar from "../Utils/ContactBar/ContactBar";
 
 function NavContact() {
   return (
     <div className="nav-contact">
-      <li>
-        <FiFacebook />
-      </li>
-      <li>
-        <FiLinkedin />
-      </li>
-      <li>
-        <FiTwitter />
-      </li>
-      <li>
-        <FiInstagram />
-      </li>
+     <SocialContactBar/>
     </div>
   );
 }
@@ -96,7 +86,9 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className="navbar-middle-item">
+                <Link to="/bookRepair">
                 <p>Book Rapair</p>
+                </Link>
               </li>
               <li className="navbar-middle-item">
                 <Link to="/allProducts">
@@ -104,10 +96,14 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className="navbar-middle-item">
-                <p>contact</p>
+              <Link to="/contactUS">
+                  <p>Contact</p>
+                </Link>
               </li>
               <li className="navbar-middle-item">
-                <p>about</p>
+              <Link to="/aboutUs">
+                  <p>About</p>
+                </Link>
               </li>
             </ul>
           </div>

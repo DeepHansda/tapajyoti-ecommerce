@@ -1,5 +1,12 @@
 import {
+  ALL_USERS_FAIL,
+  ALL_USERS_REQUEST,
+  ALL_USERS_SUCCESS,
   CLEAR_ERRORS,
+  DELETE_USER_FAIL,
+  DELETE_USER_REQUEST,
+  DELETE_USER_RESET,
+  DELETE_USER_SUCCESS,
   LOAD_USER_FAIL,
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
@@ -80,5 +87,84 @@ export const userReducer = (
 
       default:
         return state
+  }
+
+};
+
+
+export const allUsersReducer = (state = { users: [] }, action) => {
+  const {type, payload} = action;
+  switch (type) {
+    case ALL_USERS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ALL_USERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        users: payload,
+      };
+
+    case ALL_USERS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const profileReducer = (state = {}, action) => {
+  const {type, payload} = action;
+  switch (type) {
+    case DELETE_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+
+    case DELETE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: payload,
+        message: payload.message,
+      };
+
+   
+    case DELETE_USER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+      };
+
+
+    case DELETE_USER_RESET:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
   }
 };

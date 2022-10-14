@@ -2,12 +2,18 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 
 const errorMiddleware = require("./src/middleware/error");
 const userRouter = require("./src/routes/userRoutes");
 const productRouter = require("./src/routes/productRoutes");
 const orderRouter = require("./src/routes/orderRoutes");
+const repairRouter = require("./src/routes/repairRoutes")
 
+
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.raw())
 app.use(express.json());
 app.use(cookieParser());
 
@@ -32,6 +38,8 @@ app.get("/", (req, res) => {
 app.use("/api", userRouter);
 app.use("/api", productRouter);
 app.use("/api", orderRouter);
+app.use("/api", repairRouter);
+
 
 // Middleware for Errors
 app.use(errorMiddleware);

@@ -8,9 +8,11 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useContext } from "react";
+import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { ProjectContext } from "../../App";
 import accept from "../../assets/icons/accept.png";
+import OrderStepper from "../Utils/OrderStepper";
 function ConfirmOrder() {
   // const {order} = useSelector((state) => state.order)
   const { navigator } = useContext(ProjectContext);
@@ -59,6 +61,8 @@ function ConfirmOrder() {
   };
   const date = new Date(order.createdAt);
   return (
+    <Fragment>
+      <OrderStepper activeStep={3}/>
     <div className="confirmOrder" style={{ marginTop: "20px" }}>
       <Container maxWidth="sm">
         <Paper variant="outlined">
@@ -210,6 +214,7 @@ function ConfirmOrder() {
         </Paper>
       </Container>
     </div>
+    </Fragment>
   );
 }
 

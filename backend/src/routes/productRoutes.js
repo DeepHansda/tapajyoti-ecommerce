@@ -5,7 +5,7 @@ const router = new express.Router();
 const isAuthenticated = require('../middleware/auth')
 
 
-router.post('/createProduct',upload.array('img'),createProduct)
+router.post('/createProduct',isAuthenticated,upload.array('img',5),createProduct)
 router.get('/getProducts',getAllProducts);
 router.get('/getAllProducts',getAdminProducts)
 router.get('/getProduct/:id',getProductDetails)

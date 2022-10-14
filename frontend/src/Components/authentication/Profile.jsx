@@ -13,7 +13,7 @@ import {
 import React, { useContext, useEffect, Fragment } from "react";
 import { FiBookmark, FiHeart, FiShoppingCart } from "react-icons/fi";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ProjectContext } from "../../App";
 import { clearErrors, logout } from "../../Redux/Actions/UserActions";
 import Footer from "../Footer/Footer";
@@ -24,6 +24,8 @@ function Profile() {
   const { loading, isAuthenticated, user, error } = useSelector(
     (state) => state.user
   );
+  
+  const nav = useLocation()
   const { navigator, dispatch, setOpenAlert } = useContext(ProjectContext);
   const {cartItems} = useSelector(state=>state.cart)
   const {wishItems} = useSelector((state)=>state.wishList)
@@ -50,7 +52,7 @@ function Profile() {
       link: "/myOrders",
     },
   ];
-
+console.log(nav.state?.previousPath)
   useEffect(() => {
     if (error) {
       setOpenAlert({ open: true, message: error.message, success: false });

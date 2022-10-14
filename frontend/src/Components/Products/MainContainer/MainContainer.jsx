@@ -41,7 +41,6 @@ export default function MainContainer() {
   const [keyword, setKeyword] = useState("");
   const [category, setCategory] = React.useState("");
   const [searchParams] = useSearchParams();
-
   // getting search parameter form searchbar------------------------------
 
   var keywordParam = searchParams.get("keyword");
@@ -55,9 +54,12 @@ export default function MainContainer() {
   }, [categoryParam]);
 
   console.log(categoryParam);
+  console.log(value);
   // handling products------------------------------------------
+ 
+ 
   useEffect(() => {
-    dispatch(getProductsClient(keyword, currentPage, category));
+    dispatch(getProductsClient(keyword, currentPage, category,ratings, brand));
   }, [keyword, currentPage, category]);
 
   const productsStates = useSelector((state) => state.products);
@@ -75,7 +77,7 @@ export default function MainContainer() {
   // filter events------------------------------------------------
 
   const applyFilter = () => {
-    dispatch(getProductsClient(keyword, currentPage, ratings, brand));
+    dispatch(getProductsClient(keyword, currentPage,category, ratings, brand));
   };
   const handlePageChange = (event) => {
     setCurrentPage(event);
@@ -104,7 +106,7 @@ export default function MainContainer() {
 
   const brands = [
     {
-      value: "all",
+      value: "",
     },
     {
       value: "nokia",

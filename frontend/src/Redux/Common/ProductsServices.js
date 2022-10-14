@@ -1,29 +1,12 @@
 import {API} from './API'
 export const ProductsServices ={
     getProductsClient:(keyword , currentPage, category ,ratings ,brand)=>{
-        if(brand && ratings){
-            return API.get(`/getProducts/?keyword=${keyword}&page=${currentPage}&rating=${ratings}&brand=${brand}`)
-        }
-        
-        if(brand){
-           return API.get(`/getProducts/?keyword=${keyword}&page=${currentPage}&brand=${brand}`)
-       }
-
-       if(category){
-        return API.get(`/getProducts/?keyword=${keyword}&page=${currentPage}&category=${category}`)
-       }
-       
-        if(ratings){
-            return API.get(`/getProducts/?keyword=${keyword}&page=${currentPage}&rating=${ratings}`)
-        }
-        
-
-        else{
-            return API.get(`/getProducts/?keyword=${keyword}&page=${currentPage}`)
-        }
-        
+        return API.get(`/getProducts/?keyword=${keyword}&category=${category}&page=${currentPage}&ratings=${ratings}&brand=${brand}`)
     },
 
+    createProduct:(data)=>{
+        return API.post('/createProduct', data)
+    },
     getAllProducts:()=>{
         return API.get('/getAllProducts')
     },

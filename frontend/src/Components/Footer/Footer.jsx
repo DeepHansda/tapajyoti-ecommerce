@@ -8,6 +8,7 @@ import {
   FiPhoneCall,
   FiTwitter,
 } from "react-icons/fi";
+import SocialContactBar from "../Utils/ContactBar/ContactBar";
 import "./Footer.css";
 export default function Footer() {
   return (
@@ -50,26 +51,7 @@ export default function Footer() {
           </p>
 
           <div class="social">
-            <li>
-              <a href="">
-                <FiFacebook />
-              </a>
-            </li>
-            <li>
-              <a href="">
-                <FiInstagram />
-              </a>
-            </li>
-            <li>
-              <a href="">
-                <FiLinkedin />
-              </a>
-            </li>
-            <li>
-              <a href="">
-                <FiTwitter />
-              </a>
-            </li>
+            <SocialContactBar/>
           </div>
         </div>
 

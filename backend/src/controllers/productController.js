@@ -8,19 +8,18 @@ module.exports = {
   // create product-----------------------
 
   createProduct: catchAsyncErrors(async (req, res, next) => {
+    const images = req.files;
     let productImages = [];
-    if (req.files.length > 0) {
-      productImages = req.files.map((file) => {
-        return file.path;
-      });
-    }
+
+    images.forEach((image) => {
+      productImages.push(image.path);
+    });
 
     const folder = "tapajyoti/products";
     const imgLinks = [];
     for (x in productImages) {
       const result = await cloudUpload(productImages[x], folder);
       console.log(result);
-
       imgLinks.push({
         public_id: result.public_id,
         img: result.url,
@@ -39,7 +38,7 @@ module.exports = {
       }
 
       res.status(200).json({
-        success: 0,
+        success: 1,
         message: "product added !",
         result,
       });

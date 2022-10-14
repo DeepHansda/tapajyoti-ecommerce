@@ -70,7 +70,6 @@
   font-weight: 300;
 }
 
-.nav-contact li,
 .nav-user-options li {
   display: inline-block;
   margin: 5px 18px;
@@ -115,8 +114,16 @@
   text-align: center;
   margin: 0 auto;
 }
+.nav-contact {
+  width: 260px;
+  margin: 10px 0;
+}
 
 @media screen and (min-width: 700px) {
+  .nav-contact {
+    width: 200px;
+    margin: 0;
+  }
   .serach-for-small {
     padding: 0;
     margin: 0;
@@ -149,8 +156,7 @@
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
-  border-top: 1px solid var(--public-color);
-
+    border-top: 1px solid var(--public-color);
   }
   .navbar-middle
     .navbar-middle-container
@@ -165,5 +171,11 @@
 
   .sideBarButton {
     display: none;
+  }
+}
+
+@media screen and (min-width: 770px) {
+  .nav-contact {
+    width: 230px;
   }
 }

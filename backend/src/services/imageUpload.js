@@ -17,11 +17,6 @@ module.exports = {
             folder: folder
         }).then((result) => {
             if (result) {
-                fs.unlink(path, (err) => {
-                    err ? console.error(err) : console.log('file cleared !')
-                });
-
-                console.log(result)
                 return {
                     message: "upload successful",
                     public_id: result.public_id,
@@ -29,16 +24,8 @@ module.exports = {
                 };
             }
         }).catch(err => {
-            fs.unlink(path, (err) => {
-                err ? console.error(err) : console.log('file cleared !')
-            });
-
-
             console.log(err)
-            return {
-                message: "upload faild",
-                error: err
-            };
+            return (new ErrorHandler("image upload failed!", 401));
         })
     },
 

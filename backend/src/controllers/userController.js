@@ -131,5 +131,24 @@ module.exports = {
                 })
             }
         })
+    }),
+
+    deleteUser:catchAsyncErrors(async (req, res, next) => {
+        const {id} = req.params
+        await UserModel.findByIdAndDelete({_id: id}).exec((err, result) => {
+            if (err) {
+                console.log(err)
+                return next(new ErrorHandler('something went wrong', 401))
+            } else if (!result || result.length === 0) {
+                return next(new ErrorHandler('does not exist', 401))
+            } else {
+                res.status(200).json({
+                    success: 1,
+                    message:'user deleted successfully',
+                    result
+
+                })
+            }
+        })
     })
 }
