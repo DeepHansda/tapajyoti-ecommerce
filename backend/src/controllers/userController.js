@@ -4,7 +4,6 @@ const ErrorHandler = require('../services/errorHandler');
 const tokenHandler = require('../services/tokenHandler');
 module.exports = {
     signUp: catchAsyncErrors(async (req, res, next) => {
-        console.log(req.body)
         const {
             first_name,
             last_name,

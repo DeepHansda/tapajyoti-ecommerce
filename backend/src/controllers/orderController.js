@@ -9,7 +9,6 @@ module.exports = {
     createOrder: catchAsyncErrors(async (req, res, next) => {
        
         const order = new Order(req.body);
-        // console.log(items);
         await order.save((err, order) => {
             if (err) {
                 console.log(err)

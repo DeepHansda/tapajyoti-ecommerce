@@ -19,7 +19,6 @@ module.exports = {
     const imgLinks = [];
     for (x in productImages) {
       const result = await cloudUpload(productImages[x], folder);
-      console.log(result);
       imgLinks.push({
         public_id: result.public_id,
         img: result.url,
