@@ -4,6 +4,7 @@ const ErrorHandler = require('../services/errorHandler');
 const tokenHandler = require('../services/tokenHandler');
 module.exports = {
     signUp: catchAsyncErrors(async (req, res, next) => {
+        console.log(req.body)
         const {
             first_name,
             last_name,
@@ -15,27 +16,40 @@ module.exports = {
 
         const data = {
             full_name : first_name+' '+last_name,
-            email,
-            mobile_number,
-            password,
+            email:email,
+            mobile_number: mobile_number,
+            password:password,
             avatar: 'http://fffewsf',
             role
         }
 
-        const _user = new UserModel(data)
-
-        await _user.save(async (err, user) => {
-            if (err) {
-                if (err.keyPattern.email) {
-                    return next(new ErrorHandler(`${err.keyValue.email} is already registered`, 401))
-                }
-                console.log(err)
-
-                return next(new ErrorHandler(`registration faild`, 401))
-
-            } else {
-                await tokenHandler(res,200,user)
+        await UserModel.findOne({email}).exec(async (err, user) => {
+            if(err) {
+                return next(new ErrorHandler(err.message, 401))
             }
+
+            if(user){
+                return next(new ErrorHandler(`${user.email} is already registered`, 401))
+            }
+
+
+            const _user = new UserModel(data)
+
+            await _user.save(async (err, user) => {
+                if (err) {
+                    console.log(err)
+                    if (err) {
+                        return next(new ErrorHandler(err.message, 401))
+                    }
+    
+                    return next(new ErrorHandler(`registration faild`, 401))
+    
+                } else {
+                    await tokenHandler(res,200,user)
+                }
+            })
+
+
         })
     }),
 

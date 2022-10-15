@@ -3,6 +3,8 @@ const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const os = require("os");
+
 
 const errorMiddleware = require("./src/middleware/error");
 const userRouter = require("./src/routes/userRoutes");
@@ -16,10 +18,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.raw())
 app.use(express.json());
 app.use(cookieParser());
-
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000"],
     credentials: true,
     "Access-Control-Allow-Credentials": "true",
     "Access-Control-Allow-Headers":

@@ -352,7 +352,13 @@ export default function MainContainer() {
                   />
                 )}
               </div>
-              <ProductsContainer products={products} />
+              {products.length != 0 ? (<ProductsContainer products={products} />):(
+                <Container>
+                  <Typography variant="h5">
+                    Products not Found !
+                  </Typography>
+                </Container>
+              )}
 
               <div className="products-container-pagination">
                 <Pagination

@@ -66,8 +66,13 @@ export default function SignUp() {
 
   const handleSignUp = (event) => {
     event.preventDefault();
-    // const data = new FormData(event.currentTarget);
+    const data = new FormData();
 
+    data.set('first_name',first_name)
+    data.set('last_name',last_name)
+    data.set('email',email)
+    data.set('mobile_number',mobile_number)
+    data.set('password',password)
     const formData = {
       first_name,
       last_name,
@@ -76,7 +81,7 @@ export default function SignUp() {
        password,
      }
 
-     dispatch(signUp(formData))
+     dispatch(signUp(data))
   };
 
   const handleSignIn = (event) => {
