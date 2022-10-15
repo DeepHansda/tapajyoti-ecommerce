@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 axios.defaults.withCredentials=true
+// https://tapajyoti-ecommerce-backend.vercel.app/
 export const API = axios.create({
-    baseURL:'http://localhost:3400/api',
+    baseURL:'https://tapajyoti-ecommerce-backend.vercel.app/api',
     headers: {
         "Content-Type": 'application/json',
       //   "Access-Control-Allow-Origin":'*',
