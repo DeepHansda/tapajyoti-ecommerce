@@ -2,7 +2,6 @@ class ApiFeatures {
   constructor(query, queryStr) {
     this.query = query;
     this.queryStr = queryStr;
-    console.log(this.queryStr);
   }
 
   // search
@@ -28,7 +27,6 @@ class ApiFeatures {
   filter() {
     const mainQueryStr = { ...this.queryStr };
     const removeFields = ["keyword", "page", "limit"];
-    console.log(removeFields);
     for (var key in this.queryStr) {
       if (this.queryStr[key] == "") {
         removeFields.push(key);
