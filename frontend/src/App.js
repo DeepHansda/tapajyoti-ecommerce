@@ -28,6 +28,7 @@ import AdminHome from "./ADMIN/Components/Home/AdminHome";
 import AdminOrderDetails from "./ADMIN/Components/Orders/AdminOrderDetails";
 import Customers from "./ADMIN/Components/Customers/Customers";
 import AdminProducts from "./ADMIN/Components/Products/AdminProducts";
+import ExtraControll from "./ADMIN/Components/ExtraControl/ExtraControll";
 export const ProjectContext = createContext();
 function App() {
   const [offset, setOffset] = useState(0);
@@ -114,6 +115,8 @@ function App() {
             <Route path="/admin/orderDetails/:id" element={<AdminOrderDetails/>}/>
             <Route path="/admin/customers" element={<Customers/>}/>
             <Route path="/admin/products" element={<AdminProducts/>}/>
+            <Route path="/admin/extras" element={<ExtraControll/>}/>
+
           </Route>
 
           </Route>

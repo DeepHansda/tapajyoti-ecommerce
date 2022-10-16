@@ -4,7 +4,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 
-import { FiAirplay, FiBarChart, FiDatabase, FiGitBranch, FiLayers, FiShoppingCart, FiUser } from "react-icons/fi";
+import { FiAirplay, FiBarChart, FiBarChart2, FiDatabase, FiGitBranch, FiLayers, FiShoppingCart, FiUser } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 export const mainListItems = (
@@ -45,7 +45,18 @@ export const mainListItems = (
       <ListItemText primary="Products" />
     </ListItemButton>
     </Link>
+
+    <Link to="/admin/extras">
+    <ListItemButton>
+      <ListItemIcon>
+        <FiBarChart2 />
+      </ListItemIcon>
+      <ListItemText primary="Utils" />
+    </ListItemButton>
+    </Link>
   </React.Fragment>
+
+
 );
 
 export const secondaryListItems = (

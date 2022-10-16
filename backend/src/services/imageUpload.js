@@ -25,7 +25,7 @@ module.exports = {
             }
         }).catch(err => {
             console.log(err)
-            return (new ErrorHandler("image upload failed!", 401));
+            return (new ErrorHandler(err.message, 401));
         })
     },
 
