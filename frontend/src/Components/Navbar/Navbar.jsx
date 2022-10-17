@@ -146,7 +146,6 @@ export default function Navbar() {
 
   function SearchBar() {
     const [keyword, setKeyword] = useState("");
-    console.log(keyword);
     const navigate = useNavigate()
 
     const navigator = ()=>{

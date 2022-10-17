@@ -13,4 +13,4 @@ const utilsSchema = new mongoose.Schema({
 }});
 
 
-module.exports = mongoose.model('Utils',utilsSchema)
+module.exports = mongoose.model('Banners',utilsSchema)

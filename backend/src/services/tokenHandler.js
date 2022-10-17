@@ -9,6 +9,7 @@ const tokenHandler = async(res,statusCode,user) => {
                 Date.now() + 48 * 60 * 60 * 1000
             ),
             httpOnly: true,
+            
         }
 
         res.cookie("token", token, options).status(statusCode).json({

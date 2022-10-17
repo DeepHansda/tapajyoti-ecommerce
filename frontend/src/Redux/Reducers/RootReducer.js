@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux'
+import { fetchBannersReducer, newBannerReducer } from './BannerReducers'
 import { cartReducers } from './CartReducers'
 import { allOrdersReducer, myOrdersReducer, newOrderReducer, orderDetailsReducer, orderReducer } from './OrderReducers'
 import { paymentReducers } from './PaymentReducers'
@@ -28,6 +29,9 @@ export const RootReducer = combineReducers({
 
     
     newReview: newReviewReducer,
-    newRepair:createReducer
+    newRepair:createReducer,
+
+    newBanners: newBannerReducer,
+    banners:fetchBannersReducer
 })  
 

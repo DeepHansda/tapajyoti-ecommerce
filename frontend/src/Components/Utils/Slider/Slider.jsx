@@ -1,11 +1,12 @@
 import Slider from "react-slick";
 import { useContext, useEffect, useState } from "react";
 import "./slide.css";
-import { API } from "../../../Redux/Common/API";
 import { ProjectContext } from "../../../App";
 import Toast from "../Toast";
+import { getBanners } from "../../../Redux/Actions/BannerActions";
+import { useSelector } from "react-redux";
 const MainSlider = () => {
-  const { offset, width, setOpenAlert } = useContext(ProjectContext);
+  const { setOpenAlert ,dispatch} = useContext(ProjectContext);
 
   const settings = {
     lazyLoad: true,
@@ -20,26 +21,17 @@ const MainSlider = () => {
     arrows: true,
   };
 
-  const [banners, setBanners] = useState([]);
 
+  
   useEffect(() => {
-    API.get("/getBanners")
-      .then((res) => {
-        if (res.data.success == 1) {
-          setBanners(res.data.result);
-        }
-      })
-      .catch((err) => {
-
-        err && setOpenAlert({ open: true, message: err.response.data.message, success: false });
-      });
+    dispatch(getBanners())
   }, []);
-
+  const {banners , loading} = useSelector((state)=>state.banners)
   return (
     <div className="main-autoSlide">
       <Toast />
       <Slider {...settings}>
-        {banners.map((banner) => {
+        {banners && banners.map((banner) => {
           return (
             <div className="slide-items">
               <img src={banner.img} alt={banner.public_id} />
