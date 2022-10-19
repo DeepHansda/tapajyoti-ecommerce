@@ -1,16 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./productDetails.css";
-import img1 from "./img/img1.jpg";
-import img2 from "./img/img2.jpg";
-import img3 from "./img/img3.jpg";
-import img4 from "./img/img4.jpg";
-import img5 from "./img/img5.jpg";
 import { FiHeart, FiPlus, FiShoppingCart } from "react-icons/fi";
 
 import { ProjectContext } from "../../../App";
 import Star from "../../Utils/Star";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import {
   addReview,
   getProductDetails,
@@ -42,18 +37,18 @@ export default function ProductDetalis() {
   const { offset, width, dispatch, setOpenAlert } = useContext(ProjectContext);
   const { id } = useParams();
   const { wishItems } = useSelector((state) => state.wishList);
-  const productState = useSelector((state) => state.product);
   const { cartSuccess, cartItems } = useSelector((state) => state.cart);
   const [reviewRating, setReviewRating] = useState(0);
   const [reviewComment, setReviewComment] = useState("");
   const [openReviewModal, setOpenReviewModal] = useState(false);
 
-  const product_details_slider = useRef('')
+  const { loading, product } = useSelector((state) => state.product);
+
+  const product_details_slider = useRef("");
   useEffect(() => {
     dispatch(getProductDetails(id));
   }, []);
 
-  const { loading, product } = productState;
   // Increase quantity
   const [quantity, setQuantity] = useState(1);
 
@@ -146,9 +141,8 @@ export default function ProductDetalis() {
             success: true,
           });
 
-          window.setTimeout(() => {
-            window.location.reload();
-          }, 1500);
+    dispatch(getProductDetails(id));
+          
         }
       })
       .catch((err) => {
@@ -160,9 +154,9 @@ export default function ProductDetalis() {
       });
   };
 
-  const imageGallery = (img) =>{
-   product_details_slider.current.style.backgroundImage = `url(${img})`
-  }
+  const imageGallery = (img) => {
+    product_details_slider.current.style.backgroundImage = `url(${img})`;
+  };
   return (
     <Fragment>
       <Navbar />
@@ -177,14 +171,18 @@ export default function ProductDetalis() {
             }`,
           }}
         >
-          <div className="product-details-slider" ref={product_details_slider}>
+          <div className="product-details-slider" ref={product_details_slider} style={{backgroundImage:`url(${product.images && product.images[0].img})`}}>
             <div className="product-images">
-              {/* <img src="" className="active" alt="" /> */}
-              <img src={img1} alt="" onClick={()=>imageGallery(img1)}/>
-              <img src={img2} alt="" onClick={()=>imageGallery(img2)}/>
-              <img src={img3} alt="" />
-              {/* <img src={img4} alt="" /> */}
-              {/* <img src={img5} alt="" /> */}
+              {product.images && product.images.map((item, index) => {
+                return (
+                  <img
+                    key={index}
+                    src={item.img}
+                    alt="product image"
+                    onClick={() => imageGallery(item.img)}
+                  />
+                );
+              })}
             </div>
           </div>
 
@@ -196,7 +194,6 @@ export default function ProductDetalis() {
             <span className="product-discount">( 50% off )</span>
 
             <Box>
-              {console.log(product.ratings)}
               <Star ratings={product.ratings} />
             </Box>
 
@@ -250,107 +247,7 @@ export default function ProductDetalis() {
           <section className="product-spec">
             <h2 className="product-spec-heading">specification</h2>
             <p className="des">
-              * Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />
-              * Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br /> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br /> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br /> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br /> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br /> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br /> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br /> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br /> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br /> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br /> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br /> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br /> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br /> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br /> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />* Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Repellendus, maxime?
-              <br />
+              {product.features && product.features}
             </p>
           </section>
           <section className="reviews-section">

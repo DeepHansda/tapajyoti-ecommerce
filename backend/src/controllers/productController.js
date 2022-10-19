@@ -24,10 +24,10 @@ module.exports = {
         img: result.url,
       });
     }
+    console.log(req.user)
 
     req.body.images = imgLinks;
-
-    // res.body.createdBy= req.user.id
+    // res.body.createdBy = req.user._id;
 
     const product = new ProductModel(req.body);
     await product.save((err, result) => {

@@ -1,16 +1,33 @@
 import "./main.css";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import img from "../../assets/pexels-lukas-669615.jpg";
-import img0 from "../../assets/img/FRu3TDxmd2tS6A23f216.jpg";
 import Footer from "../Footer/Footer";
 import MainSlider from "../Utils/Slider/Slider";
 import Categories from "../Utils/Categories/Categories";
 import ProductsContainer from "../Products/ProductsContainer";
-
-import { Container, TextField, Button, CircularProgress } from "@mui/material";
 import Navbar from "../Navbar/Navbar";
 import Query from "../Utils/Query";
+import { getBrands } from "../../Redux/Actions/BrandActions";
+import { getCategories } from "../../Redux/Actions/CategoriesAction";
+import { useDispatch, useSelector } from "react-redux";
+
+
+
+
+
 export default function Main() {
+
+  
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getCategories())
+    dispatch(getBrands())
+
+  },[])
+
+  const {categories} = useSelector((state) => state.categories)
+  const {brands} = useSelector((state) => state.brands)
+
   return (
     <Fragment>
       <Navbar />
@@ -23,7 +40,7 @@ export default function Main() {
           </div>
 
           <div className="main-categories-container">
-            <Categories />
+            <Categories name={"Categories"} items={categories}/>
           </div>
         </div>
 
@@ -66,7 +83,7 @@ export default function Main() {
         </div>
 
         <div className="main-brands-container">
-          <Categories />
+          <Categories name={"Brands"} items={brands}/>
         </div>
 
         <div className="main-best-of">

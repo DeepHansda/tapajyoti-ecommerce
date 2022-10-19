@@ -36,35 +36,50 @@ function Cart() {
             <Typography variant="h2">Cart</Typography>
           </Container>
 
-          <Paper variant="outlined" sx={{ padding: "10px",display:{lg:'flex'}}}>
-            <Container sx={{display:{md:'grid'},gridTemplateColumns:'repeat(2,1fr)',gridGap:'15px'}}>
+          <Paper
+            variant="outlined"
+            sx={{ padding: "10px", display: { lg: "flex" } }}
+          >
+            {cartItems && cartItems.length > 0 ? (
+              <Container
+                sx={{
+                  display: { md: "grid" },
+                  gridTemplateColumns: "repeat(2,1fr)",
+                  gridGap: "15px",
+                }}
+              >
+                {cartItems.map((item) => {
+                  return <CartCard item={item} key={item.id} />;
+                })}
+              </Container>
+            ) : (
+              <Container>
+                <Typography variant="h6">Cart is Empty !</Typography>
+              </Container>
+            )}
 
-            {cartItems.map((item) => {
-              return <CartCard item={item} key={item.id} />;
-            })}
-            </Container>
-
-            <Divider sx={{margin: "10px 0"}}/>
+            <Divider sx={{ margin: "10px 0" }} />
             <div className="cart-sub-total">
               <div className="sub-total">
-              <div className="cart-sub-total-title">
-                <Typography variant="h6">Sub-Total</Typography>
-                <Typography variant="subtitle1">
-                  {cartItems.length} items
-                </Typography>
-              </div>
+                <div className="cart-sub-total-title">
+                  <Typography variant="h6">Sub-Total</Typography>
+                  <Typography variant="subtitle1">
+                    {cartItems.length} items
+                  </Typography>
+                </div>
 
-              <div className="total">
-                <Typography variant="h3">₹{TotalPrice}</Typography>
+                <div className="total">
+                  <Typography variant="h3">₹{TotalPrice}</Typography>
+                </div>
               </div>
-              </div>
-              <div className="cart-checkout">
-              <Button variant="outlined" onClick={() => checkOutHandler()}>
-                Check Out
-              </Button>
+              {cartItems && cartItems.length > 0 && (
+                <div className="cart-checkout">
+                  <Button variant="outlined" onClick={() => checkOutHandler()}>
+                    Check Out
+                  </Button>
+                </div>
+              )}
             </div>
-            </div>
-           
           </Paper>
         </Box>
       </div>

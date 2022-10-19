@@ -4,7 +4,6 @@ import {
     Drawer,
     Paper,
     Typography,
-    Slider,
     Box,
     Accordion,
     AccordionSummary,
@@ -23,6 +22,9 @@ import {
 
   import { ProjectContext } from "../../../App";
 import { getProductsClient } from '../../../Redux/Actions/ProductsActions';
+import { getCategories } from '../../../Redux/Actions/CategoriesAction';
+import { getBrands } from '../../../Redux/Actions/BrandActions';
+import { useSelector } from 'react-redux';
 
 
 function ProductsDrawer() {
@@ -33,32 +35,17 @@ function ProductsDrawer() {
     const [ratings, setRatings] = useState("");
     const [category, setCategory] = useState("");
 
-    const brands = [
-        {
-          value: "",
-        },
-        {
-          value: "nokia",
-        },
-        {
-          value: "samsung",
-        },
-        {
-          value: "moto",
-        },
-        {
-          value: "asus",
-        },
-        {
-          value: "xiomi",
-        },
-        {
-          value: "realme",
-        },
-        {
-          value: "poco",
-        },
-      ];
+
+    useEffect(() => {
+      dispatch(getCategories())
+      dispatch(getBrands())
+  
+    },[])
+  
+    const {categories} = useSelector((state) => state.categories)
+    const {brands} = useSelector((state) => state.brands)
+
+    
 
     //   useEffect(() => {
     //     dispatch(getProductsClient(category, ratings, brand));
@@ -135,13 +122,13 @@ function ProductsDrawer() {
                               }}
                               dense
                             >
-                              {brands.map((data, index) => {
+                              {categories.map((data, index) => {
                                 return (
                                   <ListItemButton key={index}>
                                     <FormControlLabel
                                       value={data.value}
                                       control={<Radio size="small" />}
-                                      label={data.value}
+                                      label={data.name}
                                       sx={{ textTransform: "capitalize" }}
                                     />
                                   </ListItemButton>

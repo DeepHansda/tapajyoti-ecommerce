@@ -1,11 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import Slider from "react-slick";
-import Data from "./Data";
-import img from "./img.jpeg";
 import "./categories.css";
-import { useNavigate } from "react-router-dom";
-// import navigator from "../navigator";
-export default function Categories() {
+import { ProjectContext } from "../../../App";
+export default function Categories({ items, name }) {
   const settings = {
     dots: false,
     arrows: true,
@@ -43,26 +40,34 @@ export default function Categories() {
       },
     ],
   };
-  const navigate = useNavigate()
+  const { navigator } = useContext(ProjectContext);
 
-  const navigator = (value)=>{
-    navigate(`allProducts?category=${value}`)
-  }
+  const navi = (value) => {
+    navigator(
+      name === "Categories"
+        ? `allProducts?category=${value}`
+        : `allProducts?brand=${value}`
+    );
+  };
   return (
     <div className="categories">
       <div className="categories-container">
         <div className="categories-title">
-          <h2>Categories</h2>
+          <h2>{name}</h2>
         </div>
 
         <div className="categories-list">
           <div className="categories-list-container">
             <Slider {...settings}>
-              {Data.map((value, index) => {
+              {items.map((value, index) => {
                 return (
-                  <div className="cate-item" key={index} onClick={() =>navigator(value.name)}>
+                  <div
+                    className="cate-item"
+                    key={index}
+                    onClick={() => navi(value.value)}
+                  >
                     <div className="cate-item-img">
-                      <img src={img} alt="icon" />
+                      <img src={value.img} alt="icon" />
                     </div>
 
                     <div className="cate-item-title">

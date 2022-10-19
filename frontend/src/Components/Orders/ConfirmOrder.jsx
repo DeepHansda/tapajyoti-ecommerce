@@ -2,6 +2,7 @@ import {
   AppBar,
   Avatar,
   Box,
+  Button,
   Container,
   Divider,
   Paper,
@@ -16,7 +17,7 @@ import OrderStepper from "../Utils/OrderStepper";
 function ConfirmOrder() {
   // const {order} = useSelector((state) => state.order)
   const { navigator } = useContext(ProjectContext);
-  const order = JSON.parse(localStorage.getItem("order"));
+  const order = JSON.parse(sessionStorage.getItem("order"));
 
   const fontStyle = {
     fontSize: "1.1em",
@@ -211,6 +212,7 @@ function ConfirmOrder() {
               </Box>
             </Container>
           </div>
+          <Button fullWidth size="large" onClick={() => navigator('/')}>GO Back To Home</Button>
         </Paper>
       </Container>
     </div>

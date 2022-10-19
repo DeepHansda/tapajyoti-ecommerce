@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { Container } from "@mui/system";
 import React, { useContext, useEffect, useState } from "react";
-import { FiArrowDown, FiChevronDown, FiSettings } from "react-icons/fi";
+import { FiChevronDown, FiSettings } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { ProjectContext } from "../../../App";
 import { getProductsClient } from "../../../Redux/Actions/ProductsActions";
@@ -27,8 +27,9 @@ import ProductsContainer from "../ProductsContainer";
 import "./mainContainer.css";
 import Pagination from "react-js-pagination";
 import Loading from "../../Utils/Loading";
-import { useLocation, useParams, useSearchParams } from "react-router-dom";
+import {  useSearchParams } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
+import { getBrands } from "../../../Redux/Actions/BrandActions";
 
 export default function MainContainer() {
   const [value, setValue] = React.useState([0, 1000]);
@@ -53,14 +54,18 @@ export default function MainContainer() {
     setCategory(categoryParam === null ? "" : categoryParam);
   }, [categoryParam]);
 
-  console.log(categoryParam);
-  console.log(value);
+  
   // handling products------------------------------------------
  
  
   useEffect(() => {
     dispatch(getProductsClient(keyword, currentPage, category,ratings, brand));
   }, [keyword, currentPage, category]);
+
+
+  useEffect(() => {
+    dispatch(getBrands())
+  },[])
 
   const productsStates = useSelector((state) => state.products);
   const {
@@ -72,8 +77,7 @@ export default function MainContainer() {
     error,
   } = productsStates;
 
-  console.log(products);
-
+const {brands} = useSelector((state) => state.brands)
   // filter events------------------------------------------------
 
   const applyFilter = () => {
@@ -104,32 +108,7 @@ export default function MainContainer() {
 
   const drawerWidth = breakPo() ? "100%" : "300px";
 
-  const brands = [
-    {
-      value: "",
-    },
-    {
-      value: "nokia",
-    },
-    {
-      value: "samsung",
-    },
-    {
-      value: "moto",
-    },
-    {
-      value: "asus",
-    },
-    {
-      value: "xiomi",
-    },
-    {
-      value: "realme",
-    },
-    {
-      value: "poco",
-    },
-  ];
+  
   const marks = [
     {
       value: 0,
@@ -243,7 +222,7 @@ export default function MainContainer() {
                                   <FormControlLabel
                                     value={data.value}
                                     control={<Radio size="small" />}
-                                    label={data.value}
+                                    label={data.name}
                                     sx={{ textTransform: "capitalize" }}
                                   />
                                 </ListItemButton>

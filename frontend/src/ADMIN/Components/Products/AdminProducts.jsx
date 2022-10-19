@@ -1,27 +1,9 @@
 import {
-    Divider,
-    Drawer,
-    Paper,
-    Typography,
-    Slider,
     Box,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
-    ListItemButton,
-    Radio,
-    FormControlLabel,
-    List,
-    RadioGroup,
-    Button,
-    Chip,
-    TextField,
   } from "@mui/material";
-  import { Container } from "@mui/system";
   import './mainContainer.css'
   import React, { useContext, useEffect, useState } from "react";
-  import { FiSettings } from "react-icons/fi";
-  import { useDispatch, useSelector } from "react-redux";
+  import {  useSelector } from "react-redux";
   import { getProductsClient } from "../../../Redux/Actions/ProductsActions";
   import ProductsContainer from "./ProductsContainer";
   import Pagination from "react-js-pagination";

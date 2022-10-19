@@ -1,11 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.css";
-import logo from "../../assets/logo.png";
 import {
-  FiFacebook,
-  FiLinkedin,
-  FiInstagram,
-  FiTwitter,
   FiHeart,
   FiShoppingCart,
   FiUser,
@@ -66,7 +61,7 @@ export default function Navbar() {
       <nav className="navbar-container">
         <div className="navbar-upper">
           <div className="logo">
-            <img src={logo} alt="logo" />
+            <h2>Logo</h2>
           </div>
         </div>
         <div

@@ -1,6 +1,8 @@
 import {combineReducers} from 'redux'
-import { fetchBannersReducer, newBannerReducer } from './BannerReducers'
+import { deleteBannerReducer, fetchBannersReducer, newBannerReducer } from './BannerReducers'
+import { deleteBrandReducer, fetchBrandsReducer, newBrandReducer } from './BrandReducers'
 import { cartReducers } from './CartReducers'
+import { deleteCategoryReducer, fetchCategoriesReducer, newCategoryReducer } from './CategoriesReducers'
 import { allOrdersReducer, myOrdersReducer, newOrderReducer, orderDetailsReducer, orderReducer } from './OrderReducers'
 import { paymentReducers } from './PaymentReducers'
 import {newProductReducer, newReviewReducer, productReducer,productsReducer} from './ProductsReducers'
@@ -32,6 +34,16 @@ export const RootReducer = combineReducers({
     newRepair:createReducer,
 
     newBanners: newBannerReducer,
-    banners:fetchBannersReducer
+    banners:fetchBannersReducer,
+    deleteBanner:deleteBannerReducer,
+
+    categories:fetchCategoriesReducer,
+    newCategory:newCategoryReducer,
+    deleteCategory:deleteCategoryReducer,
+
+    brands:fetchBrandsReducer,
+    newBrand:newBrandReducer,
+    deleteBrand:deleteBrandReducer
+
 })  
 

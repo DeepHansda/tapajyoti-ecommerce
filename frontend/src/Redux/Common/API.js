@@ -7,6 +7,6 @@ export const API = axios.create({
   baseURL: "https://tapajyoti-ecommerce-backend.vercel.app/api",
   headers: {
     "Content-Type": "application/json",
-    'Access-Control-Allow-Headers' : 'Origin X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept Cookies Accept-Encoding',
+    'Access-Control-Allow-Headers' : 'Origin X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept Accept-Encoding',
     },
 });

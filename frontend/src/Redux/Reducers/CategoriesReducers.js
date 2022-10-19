@@ -1,20 +1,20 @@
-import { CLEAR_ERRORS, CREATE_BANNER_FAIL, CREATE_BANNER_REQUEST, CREATE_BANNER_SUCCESS, DELETE_BANNER_FAIL, DELETE_BANNER_REQUEST, DELETE_BANNER_SUCCESS, GETALL_BANNERS_FAIL, GETALL_BANNERS_REQUEST, GETALL_BANNERS_SUCCESSS } from "../Common/Constants"
+import { CLEAR_ERRORS, CREATE_CATEGORY_FAIL, CREATE_CATEGORY_REQUEST, CREATE_CATEGORY_SUCCESS, DELETE_CATEGORY_FAIL, DELETE_CATEGORY_REQUEST, DELETE_CATEGORY_SUCCESS, GETALL_CATEGORIES_FAIL, GETALL_CATEGORIES_REQUEST, GETALL_CATEGORIES_SUCCESSS } from "../Common/Constants"
 
-export const newBannerReducer = (state = {banners:{}}, action) => {
+export const newCategoryReducer = (state = {result:{}}, action) => {
     const { type, payload } = action;
     switch (type) {
-      case CREATE_BANNER_REQUEST:
+      case CREATE_CATEGORY_REQUEST:
         return {
           ...state,
           createLoading: true,
         };
-      case CREATE_BANNER_SUCCESS:
+      case CREATE_CATEGORY_SUCCESS:
         return {
             ...state,
           createLoading: false,
-          banners: payload,
+          result: payload,
         };
-      case CREATE_BANNER_FAIL:
+      case CREATE_CATEGORY_FAIL:
         return {
           createLoading: false,
           error: payload,
@@ -30,21 +30,21 @@ export const newBannerReducer = (state = {banners:{}}, action) => {
     }
   };
 
-  export const fetchBannersReducer = (state = {banners: []}, action) => {
+  export const fetchCategoriesReducer = (state = {categories: []}, action) => {
     const { type, payload } = action;
 
     switch (type) {
-        case GETALL_BANNERS_REQUEST:
+        case GETALL_CATEGORIES_REQUEST:
           return {
             ...state,
             loading: true,
           };
-        case GETALL_BANNERS_SUCCESSS:
+        case GETALL_CATEGORIES_SUCCESSS:
           return {
             loading: false,
-            banners: payload,
+            categories: payload,
           };
-        case GETALL_BANNERS_FAIL:
+        case GETALL_CATEGORIES_FAIL:
           return {
             loading: false,
             error: payload,
@@ -61,19 +61,19 @@ export const newBannerReducer = (state = {banners:{}}, action) => {
   }
 
 
-  export const deleteBannerReducer = (state = {result:{}}, action) => {
+  export const deleteCategoryReducer = (state = {result:{}}, action) => {
     const { type, payload } = action;
     switch (type) {
-      case DELETE_BANNER_REQUEST:
+      case DELETE_CATEGORY_REQUEST:
         return {
           deleteLoading: true,
         };
-      case DELETE_BANNER_SUCCESS:
+      case DELETE_CATEGORY_SUCCESS:
         return {
           deleteLoading: false,
           result: payload,
         };
-      case DELETE_BANNER_FAIL:
+      case DELETE_CATEGORY_FAIL:
         return {
           deleteLoading: false,
           error: payload,

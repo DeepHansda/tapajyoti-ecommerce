@@ -1,12 +1,8 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useContext } from "react";
 import "./Products.css";
-import img from "../../../assets/img.jpg"
-import { useState } from "react";
-import { FiHeart, FiShoppingCart } from "react-icons/fi";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Star from "../../../Components/Utils/Star";
 import { ProjectContext } from "../../../App";
-import { useSelector } from "react-redux";
 import Toast from "../../../Components/Utils/Toast";
 
 export default function Product({ product }) {
@@ -30,7 +26,7 @@ export default function Product({ product }) {
         <div className="product-container">
           <div className="product-img-container">
             <div className="product-img" onClick={() => navigator(product._id)}>
-              <img src={img} alt="" />
+              <img src={product.images[0].img} alt={product.name} />
             </div>
 
             <div className="product-details">

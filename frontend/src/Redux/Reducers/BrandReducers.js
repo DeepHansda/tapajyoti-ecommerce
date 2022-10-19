@@ -1,20 +1,20 @@
-import { CLEAR_ERRORS, CREATE_BANNER_FAIL, CREATE_BANNER_REQUEST, CREATE_BANNER_SUCCESS, DELETE_BANNER_FAIL, DELETE_BANNER_REQUEST, DELETE_BANNER_SUCCESS, GETALL_BANNERS_FAIL, GETALL_BANNERS_REQUEST, GETALL_BANNERS_SUCCESSS } from "../Common/Constants"
+import { CLEAR_ERRORS, CREATE_BRAND_FAIL, CREATE_BRAND_REQUEST, CREATE_BRAND_SUCCESS, DELETE_BRAND_FAIL, DELETE_BRAND_REQUEST, DELETE_BRAND_SUCCESS, GETALL_BRANDS_FAIL, GETALL_BRANDS_REQUEST, GETALL_BRANDS_SUCCESSS } from "../Common/Constants"
 
-export const newBannerReducer = (state = {banners:{}}, action) => {
+export const newBrandReducer = (state = {result:{}}, action) => {
     const { type, payload } = action;
     switch (type) {
-      case CREATE_BANNER_REQUEST:
+      case CREATE_BRAND_REQUEST:
         return {
           ...state,
           createLoading: true,
         };
-      case CREATE_BANNER_SUCCESS:
+      case CREATE_BRAND_SUCCESS:
         return {
             ...state,
           createLoading: false,
-          banners: payload,
+          result: payload,
         };
-      case CREATE_BANNER_FAIL:
+      case CREATE_BRAND_FAIL:
         return {
           createLoading: false,
           error: payload,
@@ -30,21 +30,21 @@ export const newBannerReducer = (state = {banners:{}}, action) => {
     }
   };
 
-  export const fetchBannersReducer = (state = {banners: []}, action) => {
+  export const fetchBrandsReducer = (state = {brands: []}, action) => {
     const { type, payload } = action;
 
     switch (type) {
-        case GETALL_BANNERS_REQUEST:
+        case GETALL_BRANDS_REQUEST:
           return {
             ...state,
             loading: true,
           };
-        case GETALL_BANNERS_SUCCESSS:
+        case GETALL_BRANDS_SUCCESSS:
           return {
             loading: false,
-            banners: payload,
+            brands: payload,
           };
-        case GETALL_BANNERS_FAIL:
+        case GETALL_BRANDS_FAIL:
           return {
             loading: false,
             error: payload,
@@ -61,19 +61,19 @@ export const newBannerReducer = (state = {banners:{}}, action) => {
   }
 
 
-  export const deleteBannerReducer = (state = {result:{}}, action) => {
+  export const deleteBrandReducer = (state = {result:{}}, action) => {
     const { type, payload } = action;
     switch (type) {
-      case DELETE_BANNER_REQUEST:
+      case DELETE_BRAND_REQUEST:
         return {
           deleteLoading: true,
         };
-      case DELETE_BANNER_SUCCESS:
+      case DELETE_BRAND_SUCCESS:
         return {
           deleteLoading: false,
           result: payload,
         };
-      case DELETE_BANNER_FAIL:
+      case DELETE_BRAND_FAIL:
         return {
           deleteLoading: false,
           error: payload,

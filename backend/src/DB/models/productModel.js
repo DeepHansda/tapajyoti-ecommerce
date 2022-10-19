@@ -9,6 +9,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, 'please enter the product description']
     },
+    features: {
+        type: String,
+        required: [true, 'please enter the product features']
+    },
     price: {
         type: Number,
         required: [true, 'please enter the price'],
@@ -68,6 +72,10 @@ const productSchema = new mongoose.Schema({
         }
     }
     ],
+    best:{
+        type:Boolean,
+        default:false,
+    },
     // createdBy:{
     //     type:mongoose.Schema.ObjectId,
     //     ref:'User',

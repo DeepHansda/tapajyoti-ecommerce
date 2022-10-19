@@ -1,9 +1,7 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useContext, } from "react";
 import "./Products.css";
-import img from "../../assets/p.jpg";
-import { useState } from "react";
 import { FiHeart, FiShoppingCart } from "react-icons/fi";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import Star from "../Utils/Star";
 import { ProjectContext } from "../../App";
 import { addToWishList } from "../../Redux/Actions/WishListActions";
@@ -54,7 +52,6 @@ export default function Product({ product }) {
     dispatch(addToWishList(id))
       .then((res) => {
         const exist = wishItems.find((item) => item.product == id);
-        console.log(exist);
         if (exist) {
           setOpenAlert({
             open: true,
@@ -85,7 +82,7 @@ export default function Product({ product }) {
         <div className="product-container">
           <div className="product-img-container">
             <div className="product-img" onClick={() => navigator(product._id)}>
-              <img src={img} alt="" />
+              <img src={product.images[0].img} alt={product.name} />
             </div>
 
             <div className="product-details">
