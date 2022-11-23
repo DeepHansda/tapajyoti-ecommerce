@@ -2,7 +2,7 @@ import { API } from "../Common/API";
 
 // API.defaults.withCredentials=true
 const headersOptions = {
-  "Access-Control-Allow-Origin":["http://localhost:3000","https://tapajyoti-ecommerce.vercel.app"],
+  "Access-Control-Allow-Origin":["https://tapajyoti-ecommerce.vercel.app","http://localhost:3000",],
   'Access-Control-Allow-Headers' : 'Origin X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept',
 }
 export const UserServices = {
