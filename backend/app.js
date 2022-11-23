@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
-    origin:["http://localhost:3000","https://tapajyoti-ecommerce.vercel.app"],
+    origin:["https://tapajyoti-ecommerce.vercel.app","http://localhost:3000"],
     credentials: true,
     'Access-Control-Allow-Headers' : 'Origin X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept',
     "Access-Control-Allow-Credentials": true,
