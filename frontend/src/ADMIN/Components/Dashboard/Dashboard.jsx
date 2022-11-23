@@ -1,5 +1,5 @@
 import * as React from "react";
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
@@ -10,16 +10,11 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import { mainListItems, secondaryListItems } from "./listItems";
-import Chart from "./Chart";
-import Deposits from "./Deposits";
-import Orders from "./Orders";
 import { FiArrowLeft, FiBell, FiMenu } from "react-icons/fi";
 import { Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Copyright(props) {
   return (
@@ -85,7 +80,6 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
@@ -93,8 +87,8 @@ function DashboardContent() {
     setOpen(!open);
   };
 
+  const {user} = useSelector((state) => state.user);
   return (
-    <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
@@ -148,9 +142,13 @@ function DashboardContent() {
           <Divider />
           <List component="nav">
             {mainListItems}
-            <Divider sx={{ my: 1 }} />
           </List>
+            <Divider sx={{ my: 1 }} />
+            <Box>
+              
+            </Box>
         </Drawer>
+
         <Box
           component="main"
           sx={{
@@ -170,7 +168,6 @@ function DashboardContent() {
           </Box>
         </Box>
       </Box>
-    </ThemeProvider>
   );
 }
 

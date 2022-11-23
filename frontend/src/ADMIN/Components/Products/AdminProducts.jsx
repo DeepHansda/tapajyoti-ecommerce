@@ -49,7 +49,6 @@ import ProductsForm from "./ProductsForm";
       error,
     } = productsStates;
   
-    console.log(products);
 
     useEffect(() => {
       if(error && error.success==false){

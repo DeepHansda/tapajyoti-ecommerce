@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { Navigate, Outlet, Route } from "react-router-dom";
 
 const ProtectedRoute = ({ isAdmin ,children,redirectPath="/auth" }) => {
-  console.log(isAdmin)
  
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
 

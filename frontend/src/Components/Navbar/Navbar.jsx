@@ -61,7 +61,7 @@ export default function Navbar() {
       <nav className="navbar-container">
         <div className="navbar-upper">
           <div className="logo">
-            <h2>Logo</h2>
+            <h2>Mr.FixIt</h2>
           </div>
         </div>
         <div
