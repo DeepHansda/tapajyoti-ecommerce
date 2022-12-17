@@ -1,62 +1,53 @@
 export const columns = [
   { id: "vfd", label: "View Full Details", minWidth: 170 },
   { id: "order_id", label: "Order ID", minWidth: 170 },
-  { id: "full_name", label: "Full Name", minWidth: 100 },
+  { id: "full_name", label: "Full Name",minWidth:200},
   {
     id: "mobile_number",
     label: "Mobile Number",
-    minWidth: 170,
-    align: "right",
+    align: "center",
   },
   {
     id: "email",
     label: "Email Address",
-    minWidth: 170,
-    align: "right",
+    align: "center",
   },
   {
     id: "receipt",
     label: "Receipt",
-    minWidth: 170,
-    align: "right",
+    align: "center",
   },
   {
     id: "pmt_status",
     label: "Payment Status",
-    minWidth: 170,
-    align: "right",
+    align: "center",
   },
   {
     id: "shp_charges",
     label: "Shipping Charges",
-    minWidth: 170,
-    align: "right",
+    align: "center",
   },
   {
     id: "total_price",
     label: "Total Price",
-    minWidth: 170,
-    align: "right",
+    align: "center",
   },
 
   {
     id: "ord_status",
     label: "Order Status",
-    minWidth: 170,
-    align: "right",
+    align: "center",
   },
 
   {
     id: "dl_date",
     label: "Expected Delivery Date",
-    minWidth: 170,
     align: "center",
   },
 
   {
     id: "dled_date",
     label: "Delivered Date",
-    minWidth: 170,
     align: "right",
   },
 
@@ -73,26 +64,22 @@ export const userColumns = [
   {
     id: "mobile_number",
     label: "Mobile Number",
-    minWidth: 170,
-    align: "right",
+    align: "center",
   },
   {
     id: "email",
     label: "Email Address",
-    minWidth: 170,
-    align: "right",
+    align: "center",
   },
   {
     id: "role",
     label: "Role",
-    minWidth: 170,
-    align: "right",
+    align: "center",
   },
   {
     id: "join",
     label: "Joined Date",
-    minWidth: 170,
-    align: "right",
+    align: "center",
   },
 
   {

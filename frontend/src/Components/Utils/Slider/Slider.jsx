@@ -9,7 +9,6 @@ const MainSlider = () => {
   const { setOpenAlert ,dispatch} = useContext(ProjectContext);
 
   const settings = {
-    lazyLoad: true,
     infinite: true,
     speed: 2000,
     slidesToShow: 1,

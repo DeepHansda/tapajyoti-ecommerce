@@ -18,28 +18,28 @@ import { NavLink } from "react-router-dom";
 
 const listData = [
   {
-    icon: FiDatabase,
+    icon: FiDatabase(),
     text: "Dashboard",
     link: "/admin/main",
   },
 
   {
-    icon: FiShoppingCart,
+    icon: FiShoppingCart(),
     text: "Orders",
     link: "/admin/orders",
   },
   {
-    icon: FiUser,
+    icon: FiUser(),
     text: "Customers",
     link: "/admin/customers",
   },
   {
-    icon: FiLayers,
+    icon: FiLayers(),
     text: "Products",
     link: "/admin/products",
   },
   {
-    icon: FiBarChart2,
+    icon: FiBarChart2(),
     text: "Utils",
     link: "/admin/extras",
   },

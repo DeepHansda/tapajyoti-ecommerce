@@ -1,8 +1,19 @@
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Repair = require("../DB/models/repairModel");
 const ErrorHandler = require("../services/errorHandler");
+const { cloudUpload } = require("../services/imageUpload");
 module.exports = {
   createRepair: catchAsyncErrors(async (req, res, next) => {
+    const file = req.file;
+    if(file!=undefined || file!=null){
+      const folder = "tapajyoti/repair";
+      const _img = await cloudUpload(file.path, folder);
+      req.body.repairImg = {
+        img: _img.url,
+        public_id: _img.public_id,
+      };
+    }
+   
     const repair = new Repair(req.body);
     await repair.save((err, result) => {
       if (err) {

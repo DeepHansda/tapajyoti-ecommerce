@@ -28,6 +28,7 @@ import Toast from "../Utils/Toast";
 import Loading from "../Utils/Loading";
 import Footer from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -47,30 +48,26 @@ function Copyright(props) {
   );
 }
 
-
-
-
 export default function SignUp() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
 
   const [first_name, setFirst_name] = useState("");
   const [last_name, setLast_name] = useState("");
-  const [genders, setGenders] = useState("");
+  const [gender, setGender] = useState("");
   const [email, setEmail] = useState("");
   const [mobile_number, setMobile_number] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [previewImg,setPreviewImg] = useState("");
-  const [img,setImg] = useState("");
-
-
+  const [previewImg, setPreviewImg] = useState("");
+  const [img, setImg] = useState("");
 
   const { dispatch, navigator, setOpenAlert, location } =
     useContext(ProjectContext);
   const { loading, isAuthenticated, user, error } = useSelector(
     (state) => state.user
   );
+  const navigate = useNavigate();
 
   console.log(location.state?.previousPath);
 
@@ -78,20 +75,23 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData();
 
-    data.set("img",img)
+    data.set("img", img);
     data.set("first_name", first_name);
     data.set("last_name", last_name);
-    data.set("genders", genders);
+    data.set("gender", gender);
     data.set("email", email);
     data.set("mobile_number", mobile_number);
     data.set("password", password);
 
-
-    if(password===confirmPassword){
+    if (password === confirmPassword) {
       dispatch(signUp(data));
-    }
-    else{
-      setOpenAlert({ open: true, message: "Password Does not Matched.", success: false });
+      // navigate(-1);
+    } else {
+      setOpenAlert({
+        open: true,
+        message: "Password Does not Matched.",
+        success: false,
+      });
     }
   };
 
@@ -102,49 +102,42 @@ export default function SignUp() {
       password: password,
     };
     dispatch(signin(formData));
+    navigate(-1);
   };
 
   useEffect(() => {
+    // if (isAuthenticated === true) {
+    //   navigate(-1);
+    // }
     if (error) {
       setOpenAlert({ open: true, message: error.message, success: false });
       dispatch(clearErrors());
     }
-
-    if (isAuthenticated) {
-      navigator("/profile");
-    }
   }, [dispatch, error, isAuthenticated]);
-
 
   const handleImg = (e) => {
     e.preventDefault();
-    
+
     const img = e.target.files[0];
 
     const fileReader = new FileReader();
 
     fileReader.onload = () => {
-      if(fileReader.readyState==2){
-        setPreviewImg(fileReader.result)
-        setImg(img)
+      if (fileReader.readyState == 2) {
+        setPreviewImg(fileReader.result);
+        setImg(img);
       }
-    }
-    fileReader.readAsDataURL(img)
-  }
-
-
-
-
-
-
+    };
+    fileReader.readAsDataURL(img);
+  };
 
   return (
     <Fragment>
       <Navbar />
       {loading && <Loading />}
       <Toast />
-      <Container component="main" maxWidth="xs" sx={{ mt:6,mb:6 }}>
-        <Paper elevation={4} sx={{ padding: "20px"}}>
+      <Container component="main" maxWidth="xs" sx={{ mt: 6, mb: 6 }}>
+        <Paper elevation={4} sx={{ padding: "20px" }}>
           <CssBaseline />
           <Box
             sx={{
@@ -178,7 +171,11 @@ export default function SignUp() {
                       flexDirection: "column",
                     }}
                   >
-                    <Avatar sx={{ width: 70, height: 70 }} src={previewImg} alt="preview"/>
+                    <Avatar
+                      sx={{ width: 70, height: 70 }}
+                      src={previewImg}
+                      alt="preview"
+                    />
                     <input type="file" accept="image/*" onChange={handleImg} />
                   </Grid>
                 )}
@@ -221,8 +218,8 @@ export default function SignUp() {
                       component="fieldset"
                       name="genders"
                       variant="standard"
-                      value={genders}
-                      onChange={(e) => setGenders(e.target.value)}
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value)}
                     >
                       <FormLabel component="legend">Gender</FormLabel>
                       <RadioGroup row>
@@ -341,7 +338,7 @@ export default function SignUp() {
           <Copyright sx={{ mt: 5 }} />
         </Paper>
       </Container>
-      <Footer/>
+      <Footer />
     </Fragment>
   );
 }

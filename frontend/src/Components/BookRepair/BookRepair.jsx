@@ -267,7 +267,7 @@ function BookRepair() {
                 <FormLabel id="demo-radio-buttons-group-label">
                   Upload Image
                 </FormLabel>
-                <Input type="file" name="repairImg" />
+                <Input type="file" name="repairImg" value={repairImg} onChange={repairDataChange}/>
               </FormControl>
             </Grid>
           </Grid>
